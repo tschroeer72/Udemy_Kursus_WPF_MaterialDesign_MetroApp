@@ -1,0 +1,180 @@
+﻿<mah:MetroWindow  
+    x:Class="Kursprojekt.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Kursprojekt"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    Height="650" MinHeight="650"
+    Width="1200" MinWidth="1200"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True" 
+    WindowTitleBrush="{StaticResource AppBrushColorCyan}"
+    TitleBarHeight="20"
+    WindowStartupLocation="CenterScreen"
+    ShowCloseButton="False"
+    ShowMaxRestoreButton="False"
+    ShowMinButton="False"
+    ResizeMode="CanResizeWithGrip">
+
+    <Window.Resources>
+        <Style x:Key="BtnMinCloseStyle" TargetType="Button">
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Width" Value="28" />
+            <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="TBorder"
+                                BorderThickness="0"
+                                CornerRadius="15"
+                                Margin="2"
+                                Background="{StaticResource AppBrushColorBlue}">
+                            <!-- Alternative 1 -->
+                            <!--<Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="White" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>-->
+                            <!-- Alternative 1  ENDE -->
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+
+                        <!-- Alternative 2 -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TBorder" Property="Background" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        <!-- Alternative 2 ENDE -->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid Background="{StaticResource AppBrushColorBlue}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <!-- Menu Button-->
+                <Grid HorizontalAlignment="Left" 
+                      Width="50"
+                      Panel.ZIndex="1">
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton Name="TglBtnMenuOpenClose">
+                            <ToggleButton.Style>
+                                <Style TargetType="ToggleButton">
+                                    <Setter Property="Foreground" Value="{StaticResource AppBrushColorCyan}"/>
+                                    <Setter Property="Height" Value="36"/>
+                                    <Setter Property="Width" Value="36"/>
+                                    <Setter Property="Margin" Value="5"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Border BorderThickness="1"
+                                                        CornerRadius="6"
+                                                        BorderBrush="{StaticResource AppBrushColorCyan}"
+                                                        Background="{StaticResource AppBrushColorBlue}">
+                                                    <Grid HorizontalAlignment="Stretch"
+                                                          VerticalAlignment="Stretch">
+                                                        <md:PackIcon Name="PIOpen"
+                                                                     Kind="Menu"
+                                                                     HorizontalAlignment="Stretch"
+                                                                     VerticalAlignment="Stretch"
+                                                                     Width="34" Height="34">                                                            
+                                                        </md:PackIcon>
+                                                        <md:PackIcon Name="PIClose"
+                                                                     Kind="Close" 
+                                                                     Visibility="Collapsed"
+                                                                     HorizontalAlignment="Stretch"
+                                                                     VerticalAlignment="Stretch"
+                                                                     Width="34" Height="34">                   
+                                                        </md:PackIcon>
+                                                    </Grid>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="PIClose" Property="Visibility" Value="Visible"/>
+                                                        <Setter TargetName="PIOpen" Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </StackPanel>
+                </Grid>
+
+                <!-- App Name -->
+                <Grid HorizontalAlignment="Stretch" 
+                      Panel.ZIndex="0"
+                      Cursor="Hand"
+                      Background="{StaticResource AppBrushColorBlue}">
+                    <TextBlock Text="WIKKI" 
+                               FontSize="30" 
+                               Foreground="White"
+                               FontWeight="ExtraBold"
+                               FontFamily="Segoe Print"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                </Grid>
+
+                <!-- Min/Max/Close Button-->
+                <Grid HorizontalAlignment="Right" 
+                      Panel.ZIndex="1"
+                      Background="{StaticResource AppBrushColorBlue}">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Top"
+                                Cursor="Hand">
+                        <Button Name="BtnWindowsMinimize" 
+                                Style="{StaticResource BtnMinCloseStyle}"
+                                Foreground="{StaticResource AppBrushColorCyan}">
+                            <md:PackIcon Kind="WindowMinimize">                                
+                            </md:PackIcon>
+                        </Button>
+
+                        <ToggleButton Name="TglBtnWindowsNormalMax"
+                                      Margin="8 0">
+                            <md:PackIcon Kind="WindowMaximize"
+                                Width="24" Height="24">
+                            </md:PackIcon>
+                        </ToggleButton>
+
+                        <Button Name="BtnWindowsClose" 
+                                Style="{StaticResource BtnMinCloseStyle}"
+                                Foreground="{StaticResource AppBrushColorCyan}">
+                            <md:PackIcon Kind="WindowClose">
+                            </md:PackIcon>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <Border Grid.Row="1"
+                BorderThickness="0 1 0 0"
+                Background="#ff025b61"
+                BorderBrush="White">
+                <Grid Name="UCsPlaceholderGrid" >                  
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Grid>
+</mah:MetroWindow>
