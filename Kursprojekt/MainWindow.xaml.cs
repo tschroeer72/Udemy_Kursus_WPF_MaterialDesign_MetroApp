@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -22,6 +23,8 @@ namespace Kursprojekt
         public MainWindow()
         {
             InitializeComponent();
+
+            //ThemeManager.Current.ChangeTheme(this, "Light.Teal");
         }
 
         public async void BtnMinMaxRestoreOnClick(object sender, RoutedEventArgs e)
@@ -44,6 +47,7 @@ namespace Kursprojekt
                         NegativeButtonText = "Nein",
                         AnimateShow = true,
                         AnimateHide = true,
+                        ColorScheme = MetroDialogColorScheme.Theme
                     };
 
                     var erg = await this.ShowMessageAsync("ACHTUNG", "Wollen Sie wirklich WIKKI beenden?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
@@ -77,6 +81,27 @@ namespace Kursprojekt
                 {
                     this.DragMove();
                 }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void TglBtnMenuOpenClose_Click(object sender, RoutedEventArgs e)
+        {
+            OpenCloseFlyout(0);
+        }
+
+        private void OpenCloseFlyout(int iFlyoutIndex)
+        {
+            try
+            {
+                var flyout = this.Flyouts.Items[iFlyoutIndex] as Flyout;
+                if (flyout is null) return;
+                
+                flyout.IsOpen = !flyout.IsOpen;
+
             }
             catch(Exception ex)
             {

@@ -12,7 +12,6 @@
     Width="1200" MinWidth="1200"
     SnapsToDevicePixels="True"
     UseLayoutRounding="True" 
-    WindowTitleBrush="{StaticResource AppBrushColorCyan}"
     TitleBarHeight="6"
     WindowStartupLocation="CenterScreen"
     ShowCloseButton="False"
@@ -62,7 +61,117 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl Background="{StaticResource AppBrushColorBlue}">
+            <!-- Menu Flyout -->
+            <mah:Flyout Name="MenuFlyout"
+                        CloseButtonVisibility="Collapsed"
+                        Position="Left"
+                        Margin="0 60 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border BorderThickness="0 0 1 0"
+                            Margin="0 -36 0 0"
+                            BorderBrush="{StaticResource AppBrushColorCyan}"
+                            Background="{StaticResource AppBrushColorBlue}">
+                        <Grid>
+                            <Border Name="BorderCursor"
+                                    Panel.ZIndex="1"
+                                    Width="6" Height="44"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Margin="0 4 0 0"
+                                    Background="{StaticResource AppBrushColorCyan}">
+                            </Border>
+                            <ListView Name="MainMenuListView"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                      Background="{StaticResource AppBrushColorBlue}">
+                                <ListViewItem Name="ListViewItemHome" Height="50" 
+                                              Background="{StaticResource AppBrushColorBlue}">
+                                    <ListViewItem.RenderTransform>
+                                        <TranslateTransform x:Name="HomeTranslateTransform" />
+                                    </ListViewItem.RenderTransform>
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="4 0 0 0"
+                                                Height="36">
+                                        <md:PackIcon Kind="InformationCircleOutline" 
+                                                     Foreground="White"
+                                                     Width="30" Height="30"
+                                                     VerticalAlignment="Center">
+                                        </md:PackIcon>
+                                        <Label Content="Information"
+                                               Foreground="White"
+                                               Height="30"
+                                               VerticalContentAlignment="Center"
+                                               FontWeight="Bold">
+                                        </Label>
+                                    </StackPanel>
+                                </ListViewItem>
+
+                                <ListViewItem Name="ListViewItemVerwaltung" Height="50" 
+                                              Background="{StaticResource AppBrushColorBlue}">
+                                    <ListViewItem.RenderTransform>
+                                        <TranslateTransform x:Name="VerwaltungTranslateTransform" />
+                                    </ListViewItem.RenderTransform>
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="4 0 0 0"
+                                                Height="36">
+                                        <md:PackIcon Kind="AccountEditOutline" 
+                                                     Foreground="White"
+                                                     Width="30" Height="30"
+                                                     VerticalAlignment="Center">
+                                        </md:PackIcon>
+                                        <Label Content="Verwaltung"
+                                               Foreground="White"
+                                               Height="30"
+                                               VerticalContentAlignment="Center"
+                                               FontWeight="Bold">
+                                        </Label>
+                                    </StackPanel>
+                                </ListViewItem>
+
+                                <ListViewItem Name="ListViewItemStatistik" Height="50" 
+                                              Background="{StaticResource AppBrushColorBlue}">
+                                    <ListViewItem.RenderTransform>
+                                        <TranslateTransform x:Name="StatistikTranslateTransform" />
+                                    </ListViewItem.RenderTransform>
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="4 0 0 0"
+                                                Height="36">
+                                        <md:PackIcon Kind="ChartBar" 
+                                                     Foreground="White"
+                                                     Width="30" Height="30"
+                                                     VerticalAlignment="Center">
+                                        </md:PackIcon>
+                                        <Label Content="Statistik"
+                                               Foreground="White"
+                                               Height="30"
+                                               VerticalContentAlignment="Center"
+                                               FontWeight="Bold">
+                                        </Label>
+                                    </StackPanel>
+                                </ListViewItem>
+                            </ListView>
+                        </Grid>
+
+                    </Border>
+                </Grid>
+            </mah:Flyout>
+            
+            <!-- Info Flyout-->
+            <mah:Flyout Name="InfoFlyout">
+
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+    
+    <Grid Name="MainGrid">
         <Grid Background="{StaticResource AppBrushColorBlue}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -75,7 +184,8 @@
                       Width="50"
                       Panel.ZIndex="1">
                     <StackPanel Orientation="Horizontal">
-                        <ToggleButton Name="TglBtnMenuOpenClose">
+                        <ToggleButton Name="TglBtnMenuOpenClose" 
+                                      Click="TglBtnMenuOpenClose_Click">
                             <ToggleButton.Style>
                                 <Style TargetType="ToggleButton">
                                     <Setter Property="Foreground" Value="{StaticResource AppBrushColorCyan}"/>
@@ -218,7 +328,9 @@
                 BorderThickness="0 1 0 0"
                 Background="#ff025b61"
                 BorderBrush="White">
-                <Grid Name="UCsPlaceholderGrid" >                  
+                
+                <Grid Name="UCsPlaceholderGrid" >
+                    
                 </Grid>
             </Border>
 
