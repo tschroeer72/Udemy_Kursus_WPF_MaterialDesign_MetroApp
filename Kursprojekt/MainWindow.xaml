@@ -13,7 +13,7 @@
     SnapsToDevicePixels="True"
     UseLayoutRounding="True" 
     WindowTitleBrush="{StaticResource AppBrushColorCyan}"
-    TitleBarHeight="20"
+    TitleBarHeight="6"
     WindowStartupLocation="CenterScreen"
     ShowCloseButton="False"
     ShowMaxRestoreButton="False"
@@ -126,7 +126,8 @@
                 <Grid HorizontalAlignment="Stretch" 
                       Panel.ZIndex="0"
                       Cursor="Hand"
-                      Background="{StaticResource AppBrushColorBlue}">
+                      Background="{StaticResource AppBrushColorBlue}" 
+                      PreviewMouseMove="Grid_PreviewMouseMove">
                     <TextBlock Text="WIKKI" 
                                FontSize="30" 
                                Foreground="White"
@@ -145,21 +146,67 @@
                                 Cursor="Hand">
                         <Button Name="BtnWindowsMinimize" 
                                 Style="{StaticResource BtnMinCloseStyle}"
-                                Foreground="{StaticResource AppBrushColorCyan}">
+                                Foreground="{StaticResource AppBrushColorCyan}"
+                                Click="BtnMinMaxRestoreOnClick">
                             <md:PackIcon Kind="WindowMinimize">                                
                             </md:PackIcon>
                         </Button>
 
                         <ToggleButton Name="TglBtnWindowsNormalMax"
-                                      Margin="8 0">
-                            <md:PackIcon Kind="WindowMaximize"
-                                Width="24" Height="24">
-                            </md:PackIcon>
+                                      Margin="8 0"
+                                      Click="BtnMinMaxRestoreOnClick">
+                            <ToggleButton.Style>
+                                <Style TargetType="ToggleButton">
+                                    <Setter Property="Foreground" Value="{StaticResource AppBrushColorCyan}"/>
+                                    <Setter Property="Height" Value="28"/>
+                                    <Setter Property="Width" Value="28"/>
+                                    <Setter Property="Margin" Value="5"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Border Name="TBorder"
+                                                        BorderThickness="0"
+                                                        CornerRadius="15"
+                                                        Background="{StaticResource AppBrushColorBlue}">
+                                                    <Grid HorizontalAlignment="Stretch"
+                                                          VerticalAlignment="Stretch">
+                                                        <md:PackIcon Name="PIMax"
+                                                                     Kind="WindowMaximize"
+                                                                     HorizontalAlignment="Stretch"
+                                                                     VerticalAlignment="Stretch"
+                                                                     Width="24" Height="24">        
+                                                        </md:PackIcon>
+                                                        <md:PackIcon Name="PIRestore"
+                                                                     Kind="WindowRestore" 
+                                                                     Visibility="Collapsed"
+                                                                     HorizontalAlignment="Stretch"
+                                                                     VerticalAlignment="Stretch"
+                                                                     Width="24" Height="24">
+                                                        </md:PackIcon>
+                                                    </Grid>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="PIRestore" Property="Visibility" Value="Visible"/>
+                                                        <Setter TargetName="PIMax" Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="TBorder" Property="Background" Value="White" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ToggleButton.Style>
                         </ToggleButton>
 
                         <Button Name="BtnWindowsClose" 
                                 Style="{StaticResource BtnMinCloseStyle}"
-                                Foreground="{StaticResource AppBrushColorCyan}">
+                                Foreground="{StaticResource AppBrushColorCyan}"
+                                Click="BtnMinMaxRestoreOnClick">
                             <md:PackIcon Kind="WindowClose">
                             </md:PackIcon>
                         </Button>
