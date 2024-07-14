@@ -6,10 +6,12 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ControlzEx.Theming;
+using Kursprojekt.UserControls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -20,12 +22,64 @@ namespace Kursprojekt
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        private ucInfo? _ucInfo;
+        private ucVerwaltung? _ucVerwaltung;
+        private ucStatistik? _ucStatistik;
+
         public MainWindow()
         {
             InitializeComponent();
 
             //ThemeManager.Current.ChangeTheme(this, "Light.Teal");
         }
+
+        #region Private Methoden
+        private void _Init()
+        {
+            _ucInfo = new();
+            _ucVerwaltung = new();
+            _ucStatistik = new();
+
+            UCsPlaceholderGrid.Children.Clear();
+            UCsPlaceholderGrid.Children.Add(_ucInfo);
+        }
+
+        private void _OpenCloseFlyout(int iFlyoutIndex)
+        {
+            try
+            {
+                var flyout = this.Flyouts.Items[iFlyoutIndex] as Flyout;
+                if (flyout is null) return;
+
+                flyout.IsOpen = !flyout.IsOpen;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void _MoveMenuCursor(int iListViewSelectedIndex)
+        {
+            var ListViewItemHeight = ListViewvItemHome.Height;
+            if (iListViewSelectedIndex < 0) return;
+
+            //ohne Animation
+            //BorderCursor.Margin = new Thickness(0, 4 + (ListViewItemHeight * iListViewSelectedIndex), 0, 0);
+
+            //Mit Animation
+            ThicknessAnimation thicknessAnimation = new ThicknessAnimation();
+            thicknessAnimation.Duration = TimeSpan.FromMilliseconds(200);
+            thicknessAnimation.To = new Thickness(0, 4 + (ListViewItemHeight * iListViewSelectedIndex), 0, 0);
+            BorderCursor.BeginAnimation(FrameworkElement.MarginProperty, thicknessAnimation);
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            _Init();
+        }
+        #endregion
 
         public async void BtnMinMaxRestoreOnClick(object sender, RoutedEventArgs e)
         {
@@ -90,23 +144,53 @@ namespace Kursprojekt
 
         private void TglBtnMenuOpenClose_Click(object sender, RoutedEventArgs e)
         {
-            OpenCloseFlyout(0);
+            _OpenCloseFlyout(0);
+        }
+                
+        private void MainMenuListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StackPanelSuchen.Visibility = Visibility.Collapsed;
+            var selectedIndex = MainMenuListView.SelectedIndex;
+            _MoveMenuCursor(selectedIndex);
+            _OpenCloseFlyout(0);
+            TglBtnMenuOpenClose.IsChecked = false;
+
+            switch (selectedIndex)
+            {
+                case 0:
+                    UCsPlaceholderGrid.Children.Clear();
+                    UCsPlaceholderGrid.Children.Add(_ucInfo);
+                    StackPanelSuchen.Visibility = Visibility.Visible;
+                    break;
+                case 1:
+                    UCsPlaceholderGrid.Children.Clear();
+                    UCsPlaceholderGrid.Children.Add(_ucVerwaltung);
+                    break;
+                case 2:
+                    UCsPlaceholderGrid.Children.Clear();
+                    UCsPlaceholderGrid.Children.Add(_ucStatistik);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        private void OpenCloseFlyout(int iFlyoutIndex)
+        private void MetroWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
-                var flyout = this.Flyouts.Items[iFlyoutIndex] as Flyout;
-                if (flyout is null) return;
-                
-                flyout.IsOpen = !flyout.IsOpen;
-
+                Flyout? flyout = this.Flyouts.Items[0] as Flyout;
+                if (flyout?.IsOpen == true) 
+                {
+                    flyout.IsOpen = false;
+                    TglBtnMenuOpenClose.IsChecked = false;
+                }              
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
         }
+
     }
 }

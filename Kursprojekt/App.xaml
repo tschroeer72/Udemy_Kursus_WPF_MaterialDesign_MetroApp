@@ -17,6 +17,9 @@
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- ******************** -->
+            <!-- * Farbdefinitionen * -->
+            <!-- ******************** -->
             <SolidColorBrush x:Key="AppBrushColorBlue" Color="#FF042840" />
             <SolidColorBrush x:Key="AppBrushColorBlueHover" Color="#FF075683" />
             <SolidColorBrush x:Key="AppBrushColorCyan" Color="#FF10BFC7" />
@@ -24,6 +27,81 @@
 
             <Color x:Key="AppBlueColor">#FF042840</Color>
             <Color x:Key="AppCyanColor">#FF10BFC7</Color>
+
+            <!-- ********** -->
+            <!-- * Styles * -->
+            <!-- ********** -->
+            
+            <!-- Buttons -->
+            <Style x:Key="BtnMinCloseStyle" TargetType="Button">
+                <Setter Property="Height" Value="28" />
+                <Setter Property="Width" Value="28" />
+                <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="TBorder"
+                        BorderThickness="0"
+                        CornerRadius="15"
+                        Margin="2"
+                        Background="{StaticResource AppBrushColorBlue}">
+                                <!-- Alternative 1 -->
+                                <!--<Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>-->
+                                <!-- Alternative 1  ENDE -->
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- Alternative 2 -->
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="TBorder" Property="Background" Value="White" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                            <!-- Alternative 2 ENDE -->
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ListViewItems -->
+            <Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
+                <Setter Property="Height" Value="50"/>                
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Border>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="BorderBrush" Value="White"/>
+                                                <Setter Property="Background" Value="{StaticResource AppBrushColorBlueHover}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <ContentPresenter HorizontalAlignment="Left"
+                                      VerticalAlignment="Bottom"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

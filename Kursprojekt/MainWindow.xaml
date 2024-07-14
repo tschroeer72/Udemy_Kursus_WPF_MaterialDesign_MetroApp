@@ -17,51 +17,45 @@
     ShowCloseButton="False"
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
-    ResizeMode="CanResizeWithGrip">
+    ResizeMode="CanResizeWithGrip" 
+    MouseLeftButtonDown="MetroWindow_MouseLeftButtonDown" Loaded="MetroWindow_Loaded">
 
-    <Window.Resources>
-        <Style x:Key="BtnMinCloseStyle" TargetType="Button">
-            <Setter Property="Height" Value="28" />
-            <Setter Property="Width" Value="28" />
-            <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Name="TBorder"
-                                BorderThickness="0"
-                                CornerRadius="15"
-                                Margin="2"
-                                Background="{StaticResource AppBrushColorBlue}">
-                            <!-- Alternative 1 -->
-                            <!--<Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="White" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>-->
-                            <!-- Alternative 1  ENDE -->
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
-                        </Border>
+    <Window.Resources>    
+        <Storyboard x:Key="AnimateMenuItems">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HomeTranslateTransform"
+                                           Storyboard.TargetProperty="X">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-400"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
 
-                        <!-- Alternative 2 -->
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="TBorder" Property="Background" Value="White" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                        <!-- Alternative 2 ENDE -->
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="VerwaltungTranslateTransform"
+                               Storyboard.TargetProperty="X">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-400"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="StatistikTranslateTransform"
+                               Storyboard.TargetProperty="X">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-400"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="MenuFlyout"
+                               Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="{StaticResource AppCyanColor}"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.5" Value="{StaticResource AppBlueColor}"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
 
+    <Window.Triggers>
+        <EventTrigger SourceName="TglBtnMenuOpenClose" RoutedEvent="ToggleButton.Checked">
+            <EventTrigger.Actions>
+                <BeginStoryboard Storyboard="{StaticResource AnimateMenuItems}"/>
+            </EventTrigger.Actions>                                          
+        </EventTrigger>
+    </Window.Triggers>
+    
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl Background="{StaticResource AppBrushColorBlue}">
             <!-- Menu Flyout -->
@@ -69,99 +63,92 @@
                         CloseButtonVisibility="Collapsed"
                         Position="Left"
                         Margin="0 60 0 0">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Border BorderThickness="0 0 1 0"
+                        Margin="0 -36 0 0"
+                        HorizontalAlignment="Left"
+                        BorderBrush="{StaticResource AppBrushColorCyan}"
+                        Background="{StaticResource AppBrushColorBlue}">
+                    <Grid>
+                        <Border Name="BorderCursor"
+                            Panel.ZIndex="1"
+                            Width="6" Height="45"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="0 4 0 0"
+                            Background="{StaticResource AppBrushColorCyan}">
+                        </Border>
+                        
+                        <ListView Name="MainMenuListView"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                              Background="{StaticResource AppBrushColorBlue}"
+                              ItemContainerStyle="{StaticResource ListViewItemStyle}" SelectionChanged="MainMenuListView_SelectionChanged">
+                            <ListViewItem Name="ListViewvItemHome">
+                                <ListViewItem.RenderTransform>
+                                    <TranslateTransform x:Name="HomeTranslateTransform" />
+                                </ListViewItem.RenderTransform>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="8 0 0 0"
+                                            Height="36">
+                                    <md:PackIcon Kind="InformationCircleOutline" 
+                                                 Foreground="White"
+                                                 Width="30" Height="30"
+                                                 VerticalAlignment="Center">
+                                    </md:PackIcon>
+                                    <Label Content="Information"
+                                           Foreground="White"
+                                           Height="30"
+                                           VerticalContentAlignment="Center"
+                                           FontWeight="Bold">
+                                    </Label>
+                                </StackPanel>
+                            </ListViewItem>
 
-                    <Border BorderThickness="0 0 1 0"
-                            Margin="0 -36 0 0"
-                            BorderBrush="{StaticResource AppBrushColorCyan}"
-                            Background="{StaticResource AppBrushColorBlue}">
-                        <Grid>
-                            <Border Name="BorderCursor"
-                                    Panel.ZIndex="1"
-                                    Width="6" Height="44"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Margin="0 4 0 0"
-                                    Background="{StaticResource AppBrushColorCyan}">
-                            </Border>
-                            <ListView Name="MainMenuListView"
-                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                      Background="{StaticResource AppBrushColorBlue}">
-                                <ListViewItem Name="ListViewItemHome" Height="50" 
-                                              Background="{StaticResource AppBrushColorBlue}">
-                                    <ListViewItem.RenderTransform>
-                                        <TranslateTransform x:Name="HomeTranslateTransform" />
-                                    </ListViewItem.RenderTransform>
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="4 0 0 0"
-                                                Height="36">
-                                        <md:PackIcon Kind="InformationCircleOutline" 
-                                                     Foreground="White"
-                                                     Width="30" Height="30"
-                                                     VerticalAlignment="Center">
-                                        </md:PackIcon>
-                                        <Label Content="Information"
-                                               Foreground="White"
-                                               Height="30"
-                                               VerticalContentAlignment="Center"
-                                               FontWeight="Bold">
-                                        </Label>
-                                    </StackPanel>
-                                </ListViewItem>
+                            <ListViewItem>
+                                <ListViewItem.RenderTransform>
+                                    <TranslateTransform x:Name="VerwaltungTranslateTransform" />
+                                </ListViewItem.RenderTransform>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="8 0 0 0"
+                                            Height="36">
+                                <md:PackIcon Kind="AccountEditOutline" 
+                                             Foreground="White"
+                                             Width="30" Height="30"
+                                             VerticalAlignment="Center">
+                                    </md:PackIcon>
+                                    <Label Content="Verwaltung"
+                                           Foreground="White"
+                                           Height="30"
+                                           VerticalContentAlignment="Center"
+                                           FontWeight="Bold">
+                                    </Label>
+                                </StackPanel>
+                            </ListViewItem>
 
-                                <ListViewItem Name="ListViewItemVerwaltung" Height="50" 
-                                              Background="{StaticResource AppBrushColorBlue}">
-                                    <ListViewItem.RenderTransform>
-                                        <TranslateTransform x:Name="VerwaltungTranslateTransform" />
-                                    </ListViewItem.RenderTransform>
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="4 0 0 0"
-                                                Height="36">
-                                        <md:PackIcon Kind="AccountEditOutline" 
-                                                     Foreground="White"
-                                                     Width="30" Height="30"
-                                                     VerticalAlignment="Center">
-                                        </md:PackIcon>
-                                        <Label Content="Verwaltung"
-                                               Foreground="White"
-                                               Height="30"
-                                               VerticalContentAlignment="Center"
-                                               FontWeight="Bold">
-                                        </Label>
-                                    </StackPanel>
-                                </ListViewItem>
+                            <ListViewItem>
+                                <ListViewItem.RenderTransform>
+                                    <TranslateTransform x:Name="StatistikTranslateTransform" />
+                                </ListViewItem.RenderTransform>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="8 0 0 0"
+                                            Height="36">
+                                    <md:PackIcon Kind="ChartBar" 
+                                                 Foreground="White"
+                                                 Width="30" Height="30"
+                                                 VerticalAlignment="Center">
+                                    </md:PackIcon>
+                                    <Label Content="Statistik"
+                                           Foreground="White"
+                                           Height="30"
+                                           VerticalContentAlignment="Center"
+                                           FontWeight="Bold">
+                                    </Label>
+                                </StackPanel>
+                            </ListViewItem>
+                        </ListView>
+                    </Grid>
 
-                                <ListViewItem Name="ListViewItemStatistik" Height="50" 
-                                              Background="{StaticResource AppBrushColorBlue}">
-                                    <ListViewItem.RenderTransform>
-                                        <TranslateTransform x:Name="StatistikTranslateTransform" />
-                                    </ListViewItem.RenderTransform>
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="4 0 0 0"
-                                                Height="36">
-                                        <md:PackIcon Kind="ChartBar" 
-                                                     Foreground="White"
-                                                     Width="30" Height="30"
-                                                     VerticalAlignment="Center">
-                                        </md:PackIcon>
-                                        <Label Content="Statistik"
-                                               Foreground="White"
-                                               Height="30"
-                                               VerticalContentAlignment="Center"
-                                               FontWeight="Bold">
-                                        </Label>
-                                    </StackPanel>
-                                </ListViewItem>
-                            </ListView>
-                        </Grid>
-
-                    </Border>
-                </Grid>
+                </Border>
             </mah:Flyout>
             
             <!-- Info Flyout-->
@@ -181,7 +168,6 @@
             <Grid Grid.Row="0">
                 <!-- Menu Button-->
                 <Grid HorizontalAlignment="Left" 
-                      Width="50"
                       Panel.ZIndex="1">
                     <StackPanel Orientation="Horizontal">
                         <ToggleButton Name="TglBtnMenuOpenClose" 
@@ -229,6 +215,14 @@
                                 </Style>
                             </ToggleButton.Style>
                         </ToggleButton>
+                        <StackPanel x:Name="StackPanelSuchen" Orientation="Horizontal">
+                            <TextBox Text="suchen..." 
+                                     FontSize="16" 
+                                     Width="100" 
+                                     Margin="8 0"
+                                     Background="Transparent"
+                                     Foreground="White"/>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
 
