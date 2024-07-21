@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,8 +19,6 @@ namespace WikkiDBLib.DBAccess
             _dbContext = new();
             _dbSet = _dbContext.Set<Model>();
         }
-
-
 
         public bool Add(Model model)
         {
@@ -96,5 +95,41 @@ namespace WikkiDBLib.DBAccess
                 return model;
             }
         }
+
+        public IEnumerable<Model>? GetAll(Expression<Func<Model, bool>>? filter = null, string? includeModels = null)
+        {
+            try
+            {
+                IQueryable<Model>? query = _dbSet;
+
+                if (filter != null)
+                {
+                    query = query?.Where(filter);
+                }
+
+                if(includeModels != null)
+                {
+                    var models = includeModels.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var model in models)
+                    {
+                        query = query?.Include(model);
+                    }
+                }
+
+                if (query is not null)
+                {
+                    return query.ToList();
+                }
+
+                return null;
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show("GetAll" + Environment.NewLine + ex.Message);
+                return null;
+            }
+        }
+
+
     }
 }
