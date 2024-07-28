@@ -23,6 +23,60 @@ namespace Kursprojekt.UserControls
         public ucVerwaltung()
         {
             InitializeComponent();
+
+            Init();
+        }
+
+        private void Init()
+        {
+            ShowTabPage(BtnTabAdd);
+        }
+
+        private void ShowTabPage(Button iSender)
+        {
+            ShowTabBtnCursor(iSender);
+
+            if (iSender == BtnTabAdd)
+            {
+                TabItemAdd.IsSelected = true;
+            }
+            else if(iSender == BtnTabEdit)
+            {
+                TabItemEdit.IsSelected = true;
+            } 
+            else if (iSender == BtnTabCity)
+            {
+                TabItemCity.IsSelected = true;
+            }
+        }
+
+        private void ShowTabBtnCursor(Button iSender)
+        {
+            RctglBtnTabAdd.Fill = Brushes.Transparent;
+            RctglBtnTabEdit.Fill = Brushes.Transparent;
+            RctglBtnTabCity.Fill = Brushes.Transparent;
+
+            if (iSender == BtnTabAdd)
+            {
+                RctglBtnTabAdd.Fill = (Brush)Application.Current.Resources["AppBrushColorCyan"];
+            }
+            else if (iSender == BtnTabEdit)
+            {
+                RctglBtnTabEdit.Fill = (Brush)Application.Current.Resources["AppBrushColorCyan"];
+            }
+            else if (iSender == BtnTabCity)
+            {
+                RctglBtnTabCity.Fill = (Brush)Application.Current.Resources["AppBrushColorCyan"];
+            }
+        }
+
+        private void BtnTabOnClick(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button MyBtn)
+            {
+                if (MyBtn is null) return;
+                ShowTabPage(MyBtn);
+            }
         }
     }
 }

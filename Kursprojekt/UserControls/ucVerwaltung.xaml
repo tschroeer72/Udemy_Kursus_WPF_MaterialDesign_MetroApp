@@ -72,9 +72,93 @@
                 </Grid>
 
                 <!-- Eingabefelder -->
-                <Grid Grid.Column="1">
-                    
-                </Grid>
+                <Border Grid.Column="1"
+                        BorderThickness="1 0 0 0"
+                        BorderBrush="{StaticResource AppBrushColorCyan}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- BtnOpenTab-->
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    BorderThickness="0 0 0 1"
+                                    Margin="0 0"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <StackPanel Height="50">
+                                    <Button Name="BtnTabAdd" Margin=" 0 8 0 0"
+                                            Click="BtnTabOnClick"
+                                            Style="{StaticResource BtnOpenTabStyle}">
+                                        <md:PackIcon Width="34" Height="34"
+                                                     Foreground="White"
+                                                     Kind="AccountPlus"/>
+                                    </Button>
+                                    <Rectangle Name="RctglBtnTabAdd" Height="6"
+                                               Fill="{StaticResource AppBrushColorCyan}"
+                                               Margin="0 2 0 0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1"
+                                    BorderThickness="0 0 0 1"
+                                    Margin="0 0"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <StackPanel Height="50">
+                                    <Button Name="BtnTabEdit" Margin=" 0 8 0 0"
+                                            Click="BtnTabOnClick"
+                                            Style="{StaticResource BtnOpenTabStyle}">
+                                        <md:PackIcon Width="34" Height="34"
+                                                    Foreground="White"
+                                                    Kind="AccountEdit"/>
+                                    </Button>
+                                    <Rectangle Name="RctglBtnTabEdit" Height="6"
+                                               Margin="0 2 0 0"/>           
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="2"    
+                                    BorderThickness="0 0 0 1"
+                                    Margin="0 0"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <StackPanel Height="50">
+                                    <Button Name="BtnTabCity" Margin=" 0 8 0 0"
+                                            Click="BtnTabOnClick"
+                                            Style="{StaticResource BtnOpenTabStyle}">
+                                        <md:PackIcon Width="34" Height="34"
+                                                    Foreground="White"
+                                                    Kind="CityVariantOutline"/>
+                                    </Button>
+                                    <Rectangle Name="RctglBtnTabCity" Height="6"
+                                               Margin="0 2 0 0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- TabControl-->
+                        <Grid Grid.Row="1">
+                            <mah:MetroAnimatedTabControl Background="{StaticResource AppBrushColorBlue}">
+                                <mah:MetroTabItem Name="TabItemAdd">
+                                    <Grid Background="AliceBlue"></Grid>
+                                </mah:MetroTabItem>
+                                <mah:MetroTabItem Name="TabItemEdit">
+                                    <Grid  Background="Aquamarine"></Grid>
+                                </mah:MetroTabItem>
+                                <mah:MetroTabItem Name="TabItemCity">
+                                    <Grid  Background="Azure"></Grid>
+                                </mah:MetroTabItem>
+                            </mah:MetroAnimatedTabControl>
+                        </Grid>
+                    </Grid>
+                </Border>
             </Grid>
         </md:TransitioningContent>
     </Grid>
