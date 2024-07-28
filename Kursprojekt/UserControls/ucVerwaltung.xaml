@@ -147,13 +147,65 @@
                         <Grid Grid.Row="1">
                             <mah:MetroAnimatedTabControl Background="{StaticResource AppBrushColorBlue}">
                                 <mah:MetroTabItem Name="TabItemAdd">
-                                    <Grid Background="AliceBlue"></Grid>
+                                    <Grid Background="{StaticResource AppBrushColorBlue}" 
+                                          Margin="8 2"
+                                          HorizontalAlignment="Left"
+                                          UseLayoutRounding="True"
+                                          SnapsToDevicePixels="True">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="190"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <StackPanel>
+                                                <TextBlock x:Name="tbImageValidationInfo"
+                                                           Padding="2"
+                                                           Foreground="DarkRed"
+                                                           FontWeight="Bold"
+                                                           HorizontalAlignment="Center">                                                    
+                                                </TextBlock>
+                                                <StackPanel Orientation="Horizontal"  Height="130" Width="240" Margin="0 4">
+                                                    <Canvas x:Name="canImageDragDrop"
+                                                            Width="110"
+                                                            Background="{StaticResource AppBrushColorCyan}"
+                                                            AllowDrop="True">
+                                                        <md:PackIcon Kind="FileUploadOutline" Height="130" Width="110"
+                                                                     Foreground="{StaticResource AppBrushColorBlue}">
+                                                            
+                                                        </md:PackIcon>
+                                                    </Canvas>
+                                                    <Border BorderThickness="1"
+                                                            BorderBrush="{StaticResource AppBrushColorCyan}"
+                                                            Width="130">
+                                                        <Image x:Name="imgAdd" Stretch="Fill" Width="130" Height="130">
+                                                            
+                                                        </Image>
+                                                    </Border>
+                                                </StackPanel>
+                                                <Button x:Name="BtnAddImage"
+                                                        Style="{StaticResource BtnAddImageStyle}">
+                                                    
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1">
+                                            
+                                        </Grid>
+                                    </Grid>
                                 </mah:MetroTabItem>
+                                
                                 <mah:MetroTabItem Name="TabItemEdit">
-                                    <Grid  Background="Aquamarine"></Grid>
+                                    <Grid  Background="Aquamarine">
+                                        
+                                    </Grid>
                                 </mah:MetroTabItem>
+                                
                                 <mah:MetroTabItem Name="TabItemCity">
-                                    <Grid  Background="Azure"></Grid>
+                                    <Grid  Background="Azure">
+                                        
+                                    </Grid>
                                 </mah:MetroTabItem>
                             </mah:MetroAnimatedTabControl>
                         </Grid>

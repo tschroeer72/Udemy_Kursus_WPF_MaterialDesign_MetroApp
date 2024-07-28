@@ -185,7 +185,7 @@
 
             <Style x:Key="BtnAddImageStyle" TargetType="Button">
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontSize" Value="29"/>
+                <Setter Property="FontSize" Value="24"/>
                 <Setter Property="FontFamily" Value="Arial Black" />
                 <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Template">
@@ -208,7 +208,7 @@
                                 </Border.Style>
                                 <Grid>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <md:PackIcon Kind="Upload" Height="20" Width="20" Margin=" 0 0 10 0" Foreground="White"/>
+                                        <md:PackIcon Kind="Upload" Height="24" Width="20" Margin=" 0 0 10 0" Foreground="White"/>
                                         <TextBlock Text="Bild hochladen"/>
                                     </StackPanel>
                                 </Grid>
