@@ -248,13 +248,15 @@
                                                                 HorizontalAlignment="Stretch">
                                                         <RadioButton x:Name="rbInfiziert"
                                                                      GroupName="infiziert"
-                                                                     Content="Infiziert">
+                                                                     Content="Infiziert"
+                                                                     Style="{StaticResource RadioButtonRedStyle}">
                                                             
                                                         </RadioButton>
                                                         <RadioButton x:Name="rbNichtinfiziert"
                                                                      GroupName="infiziert"
                                                                      Margin="20 0 0 0"
-                                                                     Content="Nicht infiziert">
+                                                                     Content="Nicht infiziert"
+                                                                     Style="{StaticResource RadioButtonCyanStyle}">
                                                             
                                                         </RadioButton>
                                                     </StackPanel>
@@ -269,12 +271,14 @@
                                                                 HorizontalAlignment="Stretch">
                                                         <RadioButton x:Name="rbAbgeschlossen"
                                                                      GroupName="test"
-                                                                     Content="Abgeschlossen">
+                                                                     Content="Abgeschlossen"
+                                                                     Style="{StaticResource RadioButtonCyanStyle}">
                                                         </RadioButton>
                                                         <RadioButton x:Name="rbNichtabgeschlossen"
                                                                      GroupName="test"
                                                                      Margin="20 0 0 0"
-                                                                     Content="Nicht abgeschlossen">
+                                                                     Content="Nicht abgeschlossen"
+                                                                     Style="{StaticResource RadioButtonRedStyle}">
                                                         </RadioButton>
                                                     </StackPanel>
                                                 </Border>
