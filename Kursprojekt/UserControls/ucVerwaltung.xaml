@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
-             d:DesignHeight="650" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="1200">
     <Grid Background="{StaticResource AppBrushColorBlue}">
         <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn,Duration=0:0:0.4}">
             <Grid>
@@ -157,6 +157,7 @@
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
 
+                                        <!-- Image -->
                                         <Grid Grid.Row="0">
                                             <StackPanel>
                                                 <TextBlock x:Name="tbImageValidationInfo"
@@ -190,6 +191,7 @@
                                             </StackPanel>
                                         </Grid>
 
+                                        <!-- Eingabefelder-->
                                         <Grid Grid.Row="1">
                                             <StackPanel Margin="0 4 0 0">
                                                 <!-- Name-->
@@ -209,6 +211,7 @@
                                                 
                                                 <!-- Vorname-->
                                                 <StackPanel Height="56" 
+                                                            Margin="0 4"
                                                              HorizontalAlignment="Center">
                                                     <TextBox x:Name="txtAddVorname"
                                                              Width="340"
@@ -217,7 +220,7 @@
                                                              Cursor="Hand">
                                                     </TextBox>
                                                     <TextBlock x:Name="txtAddVornameValidationInfo"
-                                                               HorizontalAlignment="Center"
+                                                              HorizontalAlignment="Center"
                                                                 Width="340" Foreground="DarkRed">
                                                     </TextBlock>
                                                 </StackPanel>
@@ -225,15 +228,17 @@
                                                 <!-- Stadt-->
                                                 <StackPanel Height="50" 
                                                              HorizontalAlignment="Center">
-                                                    <ComboBox x:Name="cboStadt"
+                                                    <ComboBox x:Name="cboAddStadt"
                                                              Width="340"
+                                                              Padding="0 2 0 0"
+                                                              Margin="0 2"
                                                               DisplayMemberPath="Stadt"
                                                               SelectedValuePath="StandtID"
                                                               md:HintAssist.Hint="Stadt:"
                                                              Background="Transparent"
                                                              Cursor="Hand">
                                                     </ComboBox>
-                                                    <TextBlock x:Name="cboStadtValidationInfo"
+                                                    <TextBlock x:Name="cboAddStadtValidationInfo"
                                                                HorizontalAlignment="Center"
                                                                 Width="340" Foreground="DarkRed">
                                                     </TextBlock>
@@ -241,6 +246,7 @@
 
                                                 <!-- Infiziert/Nicht infiziert-->
                                                 <Border BorderThickness="1"
+                                                        Margin="0 4"
                                                         BorderBrush="{StaticResource AppBrushColorCyan}"
                                                         CornerRadius="14">
                                                     <StackPanel Height="40" 
@@ -264,6 +270,7 @@
 
                                                 <!-- Test/Test abgeschlossen-->
                                                 <Border BorderThickness="1"
+                                                        Margin="0 4"
                                                         BorderBrush="{StaticResource AppBrushColorCyan}"
                                                         CornerRadius="14">
                                                     <StackPanel Height="40" 
@@ -283,6 +290,7 @@
                                                     </StackPanel>
                                                 </Border>
 
+                                                <!-- Button Add-->
                                                 <Border HorizontalAlignment="Right" 
                                                         VerticalAlignment="Bottom">
                                                     <Button x:Name="BtnAddPerson"
@@ -301,8 +309,162 @@
                                 </mah:MetroTabItem>
                                 
                                 <mah:MetroTabItem Name="TabItemEdit">
-                                    <Grid  Background="Aquamarine">
-                                        
+                                    <Grid Background="{StaticResource AppBrushColorBlue}" 
+                                          Margin="8 2"
+                                          HorizontalAlignment="Left"
+                                          UseLayoutRounding="True"
+                                          SnapsToDevicePixels="True">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="190"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Image-->
+                                        <Grid Grid.Row="0">
+                                            <StackPanel>
+                                                <TextBlock x:Name="tbImageValidationInfoEdit"
+                                                           Padding="2"
+                                                           Foreground="DarkRed"
+                                                           FontWeight="Bold"
+                                                           HorizontalAlignment="Center">
+                                                </TextBlock>
+                                                <Border BorderThickness="1"
+                                                        BorderBrush="{StaticResource AppBrushColorCyan}"
+                                                        Width="130">
+                                                    <Image x:Name="imgEdit" Stretch="Fill" Width="130" Height="130">
+
+                                                    </Image>
+                                                </Border>
+                                                <Button x:Name="BtnEditImage"
+                                                         Style="{StaticResource BtnAddImageStyle}">
+
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- Eingabefelder -->
+                                        <Grid Grid.Row="1">
+                                            <StackPanel Margin="0 4 0 0">
+                                                <!-- Name-->
+                                                <StackPanel Height="56" 
+                                                             HorizontalAlignment="Center">
+                                                    <TextBox x:Name="txtEditName"
+                                                             Width="340"
+                                                             md:HintAssist.Hint="Name:"
+                                                             Background="Transparent"
+                                                             Cursor="Hand">
+                                                    </TextBox>
+                                                    <TextBlock x:Name="txtEditNameValidationInfo"
+                                                                HorizontalAlignment="Center"
+                                                                Width="340" Foreground="DarkRed">
+                                                    </TextBlock>
+                                                </StackPanel>
+
+                                                <!-- Vorname-->
+                                                <StackPanel Height="56" 
+                                                            Margin="0 4"
+                                                             HorizontalAlignment="Center">
+                                                    <TextBox x:Name="txtEditVorname"
+                                                             Width="340"
+                                                             md:HintAssist.Hint="Vorname::"
+                                                             Background="Transparent"
+                                                             Cursor="Hand">
+                                                    </TextBox>
+                                                    <TextBlock x:Name="txtEditVornameValidationInfo"
+                                                              HorizontalAlignment="Center"
+                                                                Width="340" Foreground="DarkRed">
+                                                    </TextBlock>
+                                                </StackPanel>
+
+                                                <!-- Stadt-->
+                                                <StackPanel Height="50" 
+                                                           HorizontalAlignment="Center">
+                                                    <ComboBox x:Name="cboEditStadt"
+                                                             Width="340"
+                                                              Padding="0 2 0 0"
+                                                              Margin="0 2"
+                                                              DisplayMemberPath="Stadt"
+                                                              SelectedValuePath="StandtID"
+                                                              md:HintAssist.Hint="Stadt:"
+                                                             Background="Transparent"
+                                                             Cursor="Hand">
+                                                    </ComboBox>
+                                                    <TextBlock x:Name="cboEditStadtValidationInfo"
+                                                               HorizontalAlignment="Center"
+                                                                Width="340" Foreground="DarkRed">
+                                                    </TextBlock>
+                                                </StackPanel>
+
+                                                <!-- Infiziert/Nicht infiziert-->
+                                                <Border BorderThickness="1"
+                                                        Margin="0 4"
+                                                        BorderBrush="{StaticResource AppBrushColorCyan}"
+                                                        CornerRadius="14">
+                                                    <StackPanel Height="40" 
+                                                                Orientation="Horizontal"
+                                                                HorizontalAlignment="Stretch">
+                                                        <RadioButton x:Name="rbEditInfiziert"
+                                                                     GroupName="infiziert"
+                                                                     Content="Infiziert"
+                                                                     Style="{StaticResource RadioButtonRedStyle}">
+
+                                                        </RadioButton>
+                                                        <RadioButton x:Name="rbEditNichtinfiziert"
+                                                                     GroupName="infiziert"
+                                                                     Margin="20 0 0 0"
+                                                                     Content="Nicht infiziert"
+                                                                     Style="{StaticResource RadioButtonCyanStyle}">
+
+                                                        </RadioButton>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- Test/Test abgeschlossen-->
+                                                <Border BorderThickness="1"
+                                                        Margin="0 4"
+                                                        BorderBrush="{StaticResource AppBrushColorCyan}"
+                                                        CornerRadius="14">
+                                                    <StackPanel Height="40" 
+                                                                Orientation="Horizontal"
+                                                                HorizontalAlignment="Stretch">
+                                                        <RadioButton x:Name="rbEditAbgeschlossen"
+                                                                     GroupName="test"
+                                                                     Content="Abgeschlossen"
+                                                                     Style="{StaticResource RadioButtonCyanStyle}">
+                                                        </RadioButton>
+                                                        <RadioButton x:Name="rbEditNichtabgeschlossen"
+                                                                     GroupName="test"
+                                                                     Margin="20 0 0 0"
+                                                                     Content="Nicht abgeschlossen"
+                                                                     Style="{StaticResource RadioButtonRedStyle}">
+                                                        </RadioButton>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- Button Delete/Edit-->
+                                                <Border HorizontalAlignment="Right" 
+                                                        VerticalAlignment="Bottom">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Button x:Name="BtnDelPerson"
+                                                            Style="{StaticResource ButtonRedHoverStyle}"
+                                                            Margin="0 20 10 0"
+                                                            Width="170"
+                                                            Content="Löschen"
+                                                            FontSize="18"
+                                                            FontWeight="Bold">
+                                                        </Button>
+                                                        <Button x:Name="BtnEditPerson"
+                                                                Style="{StaticResource ButtonStyle}"
+                                                                Margin="0 20 0 0"
+                                                                Width="170"
+                                                                Content="Aktualisieren"
+                                                                FontSize="18"
+                                                                FontWeight="Bold">
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
                                 </mah:MetroTabItem>
                                 
