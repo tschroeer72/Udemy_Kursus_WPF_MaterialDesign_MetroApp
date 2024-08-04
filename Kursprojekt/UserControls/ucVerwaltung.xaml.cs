@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,6 +24,8 @@ namespace Kursprojekt.UserControls
     /// </summary>
     public partial class ucVerwaltung : UserControl
     {
+        private string _SelectedFilepath = string.Empty;
+
         public ucVerwaltung()
         {
             InitializeComponent();
@@ -30,13 +35,19 @@ namespace Kursprojekt.UserControls
 
         private async void Init()
         {
+            rbNichtinfiziert.IsChecked = true;
+            rbNichtabgeschlossen.IsChecked = true;
+
+            rbEditNichtinfiziert.IsChecked = true;
+            rbEditNichtabgeschlossen.IsChecked = true;
+
             ShowTabPage(BtnTabAdd);
 
             var cities = await Task.Run(() => DBUnit.Stadt.GetAll());
 
             lstCities.ItemsSource = cities;
             cboAddStadt.ItemsSource = cities;
-            cboEditStadt.ItemsSource = cities;
+            cboEditStadt.ItemsSource = cities;            
         }
 
         private void ShowTabPage(Button iSender)
@@ -83,6 +94,82 @@ namespace Kursprojekt.UserControls
             {
                 if (MyBtn is null) return;
                 ShowTabPage(MyBtn);
+            }
+        }
+
+        private void canImageDragDrop_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if ((files != null) && (files.Length > 0))
+                {
+                    if (files.Length > 1)
+                    {
+                        MessageBox.Show("Nur ein Bild erlaubt!");
+                        return;
+                    }
+                }
+
+                var myFotoFile = files[0];
+                var fileInfo = new FileInfo(myFotoFile);
+                if (fileInfo.Exists)
+                {
+                    bool isFileTypeOK = (fileInfo.Extension == ".png") || fileInfo.Extension == ".jpg";
+                    if (isFileTypeOK)
+                    {
+                        _SelectedFilepath = fileInfo.FullName;
+                        var img = new BitmapImage(new Uri(fileInfo.FullName));
+                        imgAdd.Source = img;
+                    }
+                }
+            }
+            catch (Exception ex) 
+            { 
+            
+            }
+            
+        }
+
+        private void AddImageToControl(Image iImage)
+        {
+            try
+            {
+                var fileDialog = new OpenFileDialog()
+                {
+                    Filter = "Imagefiles | *.png; *jpg",
+                    Multiselect = false
+                };
+                
+                var erg = fileDialog.ShowDialog();
+                if(erg == true && erg.HasValue)
+                {
+                    _SelectedFilepath = fileDialog.FileName;
+                    var img = new BitmapImage(new Uri(_SelectedFilepath));
+                    iImage.Source = img;
+                }
+            }
+            catch (Exception ex) 
+            { 
+            
+            }
+        }
+
+        private void BtnAddImage_Click(object sender, RoutedEventArgs e)
+        {
+            //AddImageToControl((Button)sender);
+            var myBtn = sender as Button;
+            if (myBtn != null)
+            {
+                if (myBtn == BtnAddImage)
+                {
+                    AddImageToControl(imgAdd);
+                }
+                else
+                {
+                    AddImageToControl(imgEdit);
+                }                        
             }
         }
     }

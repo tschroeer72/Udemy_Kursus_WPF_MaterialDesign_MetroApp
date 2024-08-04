@@ -176,7 +176,7 @@
                                                     <Canvas x:Name="canImageDragDrop"
                                                             Width="110"
                                                             Background="{StaticResource AppBrushColorCyan}"
-                                                            AllowDrop="True">
+                                                            AllowDrop="True" Drop="canImageDragDrop_Drop">
                                                         <md:PackIcon Kind="FileUploadOutline" Height="130" Width="110"
                                                                      Foreground="{StaticResource AppBrushColorBlue}">
                                                             
@@ -191,7 +191,7 @@
                                                     </Border>
                                                 </StackPanel>
                                                 <Button x:Name="BtnAddImage"
-                                                        Style="{StaticResource BtnAddImageStyle}">
+                                                        Style="{StaticResource BtnAddImageStyle}" Click="BtnAddImage_Click">
                                                     
                                                 </Button>
                                             </StackPanel>
@@ -342,7 +342,8 @@
                                                     </Image>
                                                 </Border>
                                                 <Button x:Name="BtnEditImage"
-                                                         Style="{StaticResource BtnAddImageStyle}">
+                                                         Style="{StaticResource BtnAddImageStyle}"
+                                                         Click="BtnAddImage_Click">
 
                                                 </Button>
                                             </StackPanel>
