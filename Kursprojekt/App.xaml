@@ -216,7 +216,46 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>            
+            </Style>
+
+            <Style x:Key="BtnDeleteCityStyle" TargetType="Button">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="TBorder">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <!--<Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalAlignment" Value="Stretch"/>-->
+                                            <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
+                                            <Setter Property="CornerRadius" Value="10 10 0 0"/>
+                                            <Setter Property="Padding" Value="4"/>
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                            <!--<Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource AppBrushColorCyan}"/>
+                                                </Trigger>
+                                            </Style.Triggers>-->
+                                        </Style>
+                                    </Border.Style>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="TBorder" Property="Background" Value="{StaticResource AppBrushColorCyan}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource AppBrushColorBlue}"/>
+                                    <Setter Property="FontWeight" Value="ExtraBold"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             
                 <!-- ListViewItems -->
             <Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
@@ -251,6 +290,41 @@
                 <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemStyle}"/>
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+            </Style>
+            
+            <!-- ListBoxItem-->
+            <Style x:Key="ListBoxCitiesItemStyle" TargetType="ListBoxItem">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border x:Name="ListBoxItemBorder"
+                                    CornerRadius="10" Margin="4"
+                                    BorderThickness="1"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <Label Name="lblCityName" Content="{Binding Name}"
+                                       FontSize="14" FontWeight="Bold"
+                                       Foreground="White" HorizontalAlignment="Center">
+                                </Label>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="ListBoxItemBorder" 
+                                            Property="Background" Value="{StaticResource AppBrushColorBlueHover}">                                        
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="ListBoxItemBorder"
+                                            Property="Background" Value="{StaticResource AppBrushColorCyan}">
+                                        
+                                    </Setter>
+                                    <Setter TargetName="lblCityName" Property="Foreground" Value="{StaticResource AppBrushColorBlue}"/>
+                                    <Setter TargetName="lblCityName" Property="FontSize" Value="20"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
             
             <!-- Combobox -->
@@ -445,6 +519,7 @@
                 <Setter Property="md:HintAssist.Foreground" Value="{StaticResource AppBrushColorCyanHover}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="UseLayoutRounding" Value="True" />
+                <Setter Property="VerticalContentAlignment" Value="Bottom"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -4,12 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kursprojekt.UserControls"
+             xmlns:localConv="clr-namespace:Kursprojekt.Converters"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
              d:DesignHeight="650" d:DesignWidth="1200">
+
+    <UserControl.Resources>
+        <localConv:CityCtxMenuHeaderTextConverter x:Key="CityCtxMenuHeaderTextConverter"/>
+    </UserControl.Resources>
+    
     <Grid Background="{StaticResource AppBrushColorBlue}">
         <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn,Duration=0:0:0.4}">
             <Grid>
@@ -469,8 +475,81 @@
                                 </mah:MetroTabItem>
                                 
                                 <mah:MetroTabItem Name="TabItemCity">
-                                    <Grid  Background="Azure">
-                                        
+                                    <Grid  Background="{StaticResource AppBrushColorBlue}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <md:PackIcon Kind="CityVariantOutline"
+                                                         Foreground="White"
+                                                         HorizontalAlignment="Center"
+                                                         Height="80" Width="80">
+                                                
+                                            </md:PackIcon>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1">
+                                            <StackPanel Orientation="Horizontal" Margin="4">
+                                                <TextBox Name="txtAddNewCity" Width="210"
+                                                         Background="Transparent"
+                                                         md:HintAssist.Hint="Stadtname"
+                                                         >                                                    
+                                                </TextBox>
+                                                <Button Name="BtnAddNewCity" Content="Speichern"
+                                                        Height="30" Width="210"
+                                                        FontSize="20" Margin="10 10 0 0"
+                                                        Style="{StaticResource ButtonStyle2}">                                                    
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Grid Grid.Row="2">
+                                            <Border Margin="8"
+                                                    Padding="10"
+                                                    MinHeight="100"
+                                                    VerticalAlignment="Top"
+                                                    CornerRadius="18"
+                                                    BorderThickness="1"
+                                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                                <ListBox Name="lstCities"
+                                                         Background="Transparent"
+                                                         ItemContainerStyle="{StaticResource ListBoxCitiesItemStyle}">
+                                                    <ListBox.ContextMenu>
+                                                        <ContextMenu Background="AliceBlue">
+                                                            <ContextMenu.Items>
+                                                                <MenuItem>
+                                                                    <MenuItem.Style>
+                                                                        <Style TargetType="MenuItem">
+                                                                            <Setter Property="Template">
+                                                                                <Setter.Value>
+                                                                                    <ControlTemplate TargetType="MenuItem">
+                                                                                        <Border>
+                                                                                            <StackPanel Margin="8">
+                                                                                                <TextBlock Margin="0 8"
+                                                                                                   FontWeight="ExtraBold"
+                                                                                                   Text="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem.Name, Converter={StaticResource CityCtxMenuHeaderTextConverter} }"></TextBlock>
+                                                                                                <Button x:Name="BtnDeleteCity" 
+                                                                                                        Content="Löschen" 
+                                                                                                        Width="150" Height="40"
+                                                                                                        Style="{StaticResource BtnDeleteCityStyle}">
+                                                                                                </Button>
+                                                                                            </StackPanel>
+                                                                                        </Border>
+                                                                                    </ControlTemplate>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                        </Style>
+                                                                    </MenuItem.Style>
+                                                                </MenuItem>
+                                                            </ContextMenu.Items>
+                                                        </ContextMenu>
+                                                    </ListBox.ContextMenu>
+                                                </ListBox>
+                                            </Border>
+                                        </Grid>
                                     </Grid>
                                 </mah:MetroTabItem>
                             </mah:MetroAnimatedTabControl>

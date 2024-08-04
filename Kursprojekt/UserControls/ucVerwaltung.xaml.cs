@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WikkiDBLib.DBAccess;
 
 namespace Kursprojekt.UserControls
 {
@@ -27,9 +28,15 @@ namespace Kursprojekt.UserControls
             Init();
         }
 
-        private void Init()
+        private async void Init()
         {
             ShowTabPage(BtnTabAdd);
+
+            var cities = await Task.Run(() => DBUnit.Stadt.GetAll());
+
+            lstCities.ItemsSource = cities;
+            cboAddStadt.ItemsSource = cities;
+            cboEditStadt.ItemsSource = cities;
         }
 
         private void ShowTabPage(Button iSender)
