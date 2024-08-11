@@ -1,21 +1,14 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
+﻿using Kursprojekt.Helpers;
+using Kursprojekt.Validators;
+using Microsoft.Win32;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WikkiDBLib.DBAccess;
+using WikkiDBLib.Modells;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace Kursprojekt.UserControls
 {
@@ -24,16 +17,36 @@ namespace Kursprojekt.UserControls
     /// </summary>
     public partial class ucVerwaltung : UserControl
     {
-        private string _SelectedFilepath = string.Empty;
+        private string? _SelectedFilepath = null;
 
         public ucVerwaltung()
         {
             InitializeComponent();
-
-            Init();
         }
 
-        private async void Init()
+        private async void GetAllAndShowCitiesData()
+        {
+            using (new WaitProgressRing(pgRing))
+            {
+                var cities = await Task.Run(() => DBUnit.Stadt.GetAll());
+
+                lstCities.ItemsSource = cities;
+                cboAddStadt.ItemsSource = cities;
+                cboEditStadt.ItemsSource = cities;
+            }
+        }
+
+        private async void GetAllAndShowPersonsData()
+        {
+            using (new WaitProgressRing(pgRing))
+            {
+                var persons = await Task.Run(() => DBUnit.Person.GetAll(includeModels: nameof(Stadt)));
+
+                dgPerson.ItemsSource = persons;
+            }
+        }
+
+        private void Init()
         {
             rbNichtinfiziert.IsChecked = true;
             rbNichtabgeschlossen.IsChecked = true;
@@ -41,13 +54,7 @@ namespace Kursprojekt.UserControls
             rbEditNichtinfiziert.IsChecked = true;
             rbEditNichtabgeschlossen.IsChecked = true;
 
-            ShowTabPage(BtnTabAdd);
-
-            var cities = await Task.Run(() => DBUnit.Stadt.GetAll());
-
-            lstCities.ItemsSource = cities;
-            cboAddStadt.ItemsSource = cities;
-            cboEditStadt.ItemsSource = cities;            
+            ShowTabPage(BtnTabAdd);                 
         }
 
         private void ShowTabPage(Button iSender)
@@ -171,6 +178,120 @@ namespace Kursprojekt.UserControls
                     AddImageToControl(imgEdit);
                 }                        
             }
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            GetAllAndShowCitiesData();
+            GetAllAndShowPersonsData();
+        }
+
+        private void ClearAllValidationInfos()
+        {
+            //Add TabPage
+            txtAddNameValidationInfo.Text = string.Empty;
+            txtAddVornameValidationInfo.Text = string.Empty;
+            cboAddStadtValidationInfo.Text = string.Empty;
+
+            //Edit TabPage
+            txtEditNameValidationInfo.Text = string.Empty;
+            txtEditVornameValidationInfo.Text = string.Empty;
+            cboEditStadtValidationInfo.Text = string.Empty;
+
+            _SelectedFilepath = string.Empty;
+        }
+
+        private Person GetPersonToAddData()
+        {
+            var person = new Person();
+            person.Name = txtAddName.Text.Trim();
+            person.Vorname = txtAddVorname.Text.Trim();
+            person.StadtID = (cboAddStadt.SelectedIndex < 0) ? -1 : (int)cboAddStadt.SelectedValue;
+            person.Bild = (_SelectedFilepath is not null) ? File.ReadAllBytes(_SelectedFilepath) : null;
+            person.Infiziert = rbInfiziert.IsChecked == true ? true : false;
+            person.TestAbgeschlossen = rbAbgeschlossen.IsChecked == true ? true : false;
+
+            return person;
+        }
+
+        private void ShowValidationInfos(ValidationResult IValidationResult)
+        {
+            foreach (var err in IValidationResult.Errors)
+            {
+                if(err.PropertyName == nameof(Person.Name))
+                {
+                    txtAddNameValidationInfo.Text = err.ErrorMessage;
+                }
+
+                if (err.PropertyName == nameof(Person.Vorname))
+                {
+                    txtAddVornameValidationInfo.Text = err.ErrorMessage;
+                }
+
+                if (err.PropertyName == nameof(Person.StadtID))
+                {
+                    cboAddStadtValidationInfo.Text = err.ErrorMessage;
+                }
+
+                if (err.PropertyName == nameof(Person.Bild))
+                {
+                    //
+                }
+            }
+        }
+
+        private void ClearAllControls()
+        {
+            //Add
+            txtAddName.Clear();
+            txtAddVorname.Clear();
+            cboAddStadt.SelectedIndex = -1;
+            rbInfiziert.IsChecked = true;
+            rbNichtabgeschlossen.IsChecked = true;
+
+            //Edit
+            txtEditName.Clear();
+            txtEditVorname.Clear();
+            cboEditStadt.SelectedIndex = -1;
+            rbEditInfiziert.IsChecked = true;
+            rbEditNichtabgeschlossen.IsChecked = true;
+        }
+
+        private async void BtnAddPerson_Click(object sender, RoutedEventArgs e)
+        {
+            //Validationinfo leeren
+            ClearAllValidationInfos();
+
+            //Daten aus Controls holen
+            var personToAdd = GetPersonToAddData();
+
+            //Daten validieren
+            var personValidator = new AddNewPersonValidator();
+            ValidationResult valResult = personValidator.Validate(personToAdd);
+            if (valResult.IsValid)
+            {
+                using (new WaitProgressRing(pgRing))
+                {
+                    //Daten speichern
+                    var isOK = await Task.Run(() => DBUnit.Person.Add(personToAdd));
+                    if (isOK)
+                    {
+                        //Ausgabe
+                        GetAllAndShowPersonsData();
+                        ClearAllControls();
+                    }                  
+                }
+            }
+            else
+            {
+                ShowValidationInfos(valResult);
+            }
+
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Init();
         }
     }
 }

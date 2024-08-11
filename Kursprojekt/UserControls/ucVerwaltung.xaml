@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
-             d:DesignHeight="650" d:DesignWidth="1200">
+             d:DesignHeight="650" d:DesignWidth="1200" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <localConv:CityCtxMenuHeaderTextConverter x:Key="CityCtxMenuHeaderTextConverter"/>
@@ -47,7 +47,7 @@
                                     Margin="8 0 0 0"
                                     VerticalAlignment="Bottom"
                                     FontWeight="Bold"
-                                    Style="{StaticResource ButtonStyle2}">
+                                    Style="{StaticResource ButtonStyle2}" Click="btnRefresh_Click">
                                 
                             </Button>
                         </StackPanel>
@@ -63,7 +63,7 @@
                                 <DataGridTextColumn Header="ID" Width="100" Binding="{Binding ID}" />
                                 <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding Vorname}" />
                                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Stadt" Width="*" Binding="{Binding Stadt}" />
+                                <DataGridTextColumn Header="Stadt" Width="*" Binding="{Binding Stadt.Name}" />
                             </DataGrid.Columns>
 
                         </DataGrid>
@@ -239,7 +239,7 @@
                                                               Padding="0 2 0 0"
                                                               Margin="0 2"
                                                               DisplayMemberPath="Stadt"
-                                                              SelectedValuePath="StandtID"
+                                                              SelectedValuePath="ID"
                                                               md:HintAssist.Hint="Stadt:"
                                                              Background="Transparent"
                                                              Cursor="Hand">
@@ -259,13 +259,13 @@
                                                                 Orientation="Horizontal"
                                                                 HorizontalAlignment="Stretch">
                                                         <RadioButton x:Name="rbInfiziert"
-                                                                     GroupName="infiziert"
+                                                                     GroupName="Addinfiziert"
                                                                      Content="Infiziert"
                                                                      Style="{StaticResource RadioButtonRedStyle}">
                                                             
                                                         </RadioButton>
                                                         <RadioButton x:Name="rbNichtinfiziert"
-                                                                     GroupName="infiziert"
+                                                                     GroupName="Addinfiziert"
                                                                      Margin="20 0 0 0"
                                                                      Content="Nicht infiziert"
                                                                      Style="{StaticResource RadioButtonCyanStyle}">
@@ -283,12 +283,12 @@
                                                                 Orientation="Horizontal"
                                                                 HorizontalAlignment="Stretch">
                                                         <RadioButton x:Name="rbAbgeschlossen"
-                                                                     GroupName="test"
+                                                                     GroupName="Addtest"
                                                                      Content="Abgeschlossen"
                                                                      Style="{StaticResource RadioButtonCyanStyle}">
                                                         </RadioButton>
                                                         <RadioButton x:Name="rbNichtabgeschlossen"
-                                                                     GroupName="test"
+                                                                     GroupName="Addtest"
                                                                      Margin="20 0 0 0"
                                                                      Content="Nicht abgeschlossen"
                                                                      Style="{StaticResource RadioButtonRedStyle}">
@@ -305,7 +305,7 @@
                                                             Width="150"
                                                             Content="Speichern"
                                                             FontSize="18"
-                                                            FontWeight="Bold">
+                                                            FontWeight="Bold" Click="BtnAddPerson_Click">
                                                         
                                                     </Button>
                                                 </Border>
@@ -411,13 +411,13 @@
                                                                 Orientation="Horizontal"
                                                                 HorizontalAlignment="Stretch">
                                                         <RadioButton x:Name="rbEditInfiziert"
-                                                                     GroupName="infiziert"
+                                                                     GroupName="Editinfiziert"
                                                                      Content="Infiziert"
                                                                      Style="{StaticResource RadioButtonRedStyle}">
 
                                                         </RadioButton>
                                                         <RadioButton x:Name="rbEditNichtinfiziert"
-                                                                     GroupName="infiziert"
+                                                                     GroupName="Editinfiziert"
                                                                      Margin="20 0 0 0"
                                                                      Content="Nicht infiziert"
                                                                      Style="{StaticResource RadioButtonCyanStyle}">
@@ -435,12 +435,12 @@
                                                                 Orientation="Horizontal"
                                                                 HorizontalAlignment="Stretch">
                                                         <RadioButton x:Name="rbEditAbgeschlossen"
-                                                                     GroupName="test"
+                                                                     GroupName="Edittest"
                                                                      Content="Abgeschlossen"
                                                                      Style="{StaticResource RadioButtonCyanStyle}">
                                                         </RadioButton>
                                                         <RadioButton x:Name="rbEditNichtabgeschlossen"
-                                                                     GroupName="test"
+                                                                     GroupName="Edittest"
                                                                      Margin="20 0 0 0"
                                                                      Content="Nicht abgeschlossen"
                                                                      Style="{StaticResource RadioButtonRedStyle}">
