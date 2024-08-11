@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ControlzEx.Theming;
+using Kursprojekt.Helpers;
 using Kursprojekt.UserControls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -29,7 +30,7 @@ namespace Kursprojekt
         public MainWindow()
         {
             InitializeComponent();
-
+            GlobVar.GlobMainWindow = this;
             //ThemeManager.Current.ChangeTheme(this, "Light.Teal");
         }
 
@@ -58,6 +59,12 @@ namespace Kursprojekt
             {
 
             }
+        }
+
+        public void OpenButtonFlyout(string sInforText)
+        {
+            lblFlyoutInfo.Content = sInforText;
+            _OpenCloseFlyout(1);
         }
 
         private void _MoveMenuCursor(int iListViewSelectedIndex)
@@ -192,5 +199,9 @@ namespace Kursprojekt
             }
         }
 
+        private void btnCloseFlyoutInfo_Click(object sender, RoutedEventArgs e)
+        {
+            _OpenCloseFlyout(1);
+        }
     }
 }

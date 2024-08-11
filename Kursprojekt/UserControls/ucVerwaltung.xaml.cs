@@ -197,8 +197,6 @@ namespace Kursprojekt.UserControls
             txtEditNameValidationInfo.Text = string.Empty;
             txtEditVornameValidationInfo.Text = string.Empty;
             cboEditStadtValidationInfo.Text = string.Empty;
-
-            _SelectedFilepath = string.Empty;
         }
 
         private Person GetPersonToAddData()
@@ -242,6 +240,8 @@ namespace Kursprojekt.UserControls
 
         private void ClearAllControls()
         {
+            _SelectedFilepath = string.Empty;
+
             //Add
             txtAddName.Clear();
             txtAddVorname.Clear();
@@ -279,6 +279,7 @@ namespace Kursprojekt.UserControls
                         //Ausgabe
                         GetAllAndShowPersonsData();
                         ClearAllControls();
+                        GlobVar.GlobMainWindow?.OpenButtonFlyout($"{personToAdd.Name} wurde hinzugefügt");
                     }                  
                 }
             }
