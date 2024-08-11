@@ -58,14 +58,13 @@
                         <DataGrid x:Name="dgPerson"
                                   SnapsToDevicePixels="True"
                                   UseLayoutRounding="True"
-                                  HorizontalScrollBarVisibility="Disabled">
+                                  HorizontalScrollBarVisibility="Disabled" SelectionChanged="dgPerson_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Width="100" Binding="{Binding ID}" />
                                 <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding Vorname}" />
                                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
                                 <DataGridTextColumn Header="Stadt" Width="*" Binding="{Binding Stadt}" />
                             </DataGrid.Columns>
-
                         </DataGrid>
 
                         <mah:ProgressRing x:Name="pgRing"
@@ -317,6 +316,7 @@
                                 <mah:MetroTabItem Name="TabItemEdit">
                                     <Grid Background="{StaticResource AppBrushColorBlue}" 
                                           Margin="8 2"
+                                          Name="grdPersonEdit"
                                           HorizontalAlignment="Left"
                                           UseLayoutRounding="True"
                                           SnapsToDevicePixels="True">
@@ -337,7 +337,8 @@
                                                 <Border BorderThickness="1"
                                                         BorderBrush="{StaticResource AppBrushColorCyan}"
                                                         Width="130">
-                                                    <Image x:Name="imgEdit" Stretch="Fill" Width="130" Height="130">
+                                                    <Image x:Name="imgEdit" Stretch="Fill" Width="130" Height="130"
+                                                           Source="{Binding BitmapImage, Mode=TwoWay}">
 
                                                     </Image>
                                                 </Border>
@@ -359,7 +360,8 @@
                                                              Width="340"
                                                              md:HintAssist.Hint="Name:"
                                                              Background="Transparent"
-                                                             Cursor="Hand">
+                                                             Cursor="Hand"
+                                                             Text="{Binding Name, Mode=TwoWay}">
                                                     </TextBox>
                                                     <TextBlock x:Name="txtEditNameValidationInfo"
                                                                 HorizontalAlignment="Center"
@@ -375,7 +377,8 @@
                                                              Width="340"
                                                              md:HintAssist.Hint="Vorname::"
                                                              Background="Transparent"
-                                                             Cursor="Hand">
+                                                             Cursor="Hand"
+                                                             Text="{Binding Vorname, Mode=TwoWay}">
                                                     </TextBox>
                                                     <TextBlock x:Name="txtEditVornameValidationInfo"
                                                               HorizontalAlignment="Center"
@@ -413,6 +416,7 @@
                                                         <RadioButton x:Name="rbEditInfiziert"
                                                                      GroupName="Editinfiziert"
                                                                      Content="Infiziert"
+                                                                     IsChecked="{Binding Infiziert, Mode=TwoWay}"
                                                                      Style="{StaticResource RadioButtonRedStyle}">
 
                                                         </RadioButton>
@@ -420,6 +424,7 @@
                                                                      GroupName="Editinfiziert"
                                                                      Margin="20 0 0 0"
                                                                      Content="Nicht infiziert"
+                                                                     IsChecked="{Binding NichtInfiziert, Mode=TwoWay}"
                                                                      Style="{StaticResource RadioButtonCyanStyle}">
 
                                                         </RadioButton>
@@ -437,12 +442,14 @@
                                                         <RadioButton x:Name="rbEditAbgeschlossen"
                                                                      GroupName="Edittest"
                                                                      Content="Abgeschlossen"
+                                                                     IsChecked="{Binding TestAbgeschlossen, Mode=TwoWay}"
                                                                      Style="{StaticResource RadioButtonCyanStyle}">
                                                         </RadioButton>
                                                         <RadioButton x:Name="rbEditNichtabgeschlossen"
                                                                      GroupName="Edittest"
                                                                      Margin="20 0 0 0"
                                                                      Content="Nicht abgeschlossen"
+                                                                     IsChecked="{Binding TestNichtAbgeschlossen, Mode=TwoWay}"
                                                                      Style="{StaticResource RadioButtonRedStyle}">
                                                         </RadioButton>
                                                     </StackPanel>

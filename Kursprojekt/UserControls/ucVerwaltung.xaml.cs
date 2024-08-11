@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WikkiDBLib.DBAccess;
 using WikkiDBLib.Modells;
+using WikkiDBLib.Models.ViewModels;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace Kursprojekt.UserControls
@@ -18,6 +19,7 @@ namespace Kursprojekt.UserControls
     public partial class ucVerwaltung : UserControl
     {
         private string? _SelectedFilepath = null;
+        private PersonStadtVM? _SelectedPerson = null;
 
         public ucVerwaltung()
         {
@@ -320,6 +322,24 @@ namespace Kursprojekt.UserControls
                     dgPerson.ItemsSource = lstPersonStadt;
                 }
             }
+        }
+
+        private void dgPerson_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabItemEdit.IsSelected = false;
+            TabItemEdit.IsSelected = true;
+            ShowTabBtnCursor(BtnEditPerson);
+            ClearAllValidationInfos();
+
+            if (dgPerson.SelectedItem != null) 
+            {
+                _SelectedPerson = dgPerson.SelectedItem as PersonStadtVM;
+                if (_SelectedPerson != null) 
+                { 
+                    grdPersonEdit.DataContext = _SelectedPerson;
+                }
+            }
+
         }
     }
 }
