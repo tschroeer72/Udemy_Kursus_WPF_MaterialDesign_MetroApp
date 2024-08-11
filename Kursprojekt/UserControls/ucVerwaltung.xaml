@@ -38,7 +38,7 @@
                                      Width="160" 
                                      HorizontalAlignment="Left" 
                                      Background="Transparent"
-                                     md:HintAssist.Hint="Name suchen">
+                                     md:HintAssist.Hint="Person suchen" TextChanged="txtSearch_TextChanged">
                                 
                             </TextBox>
                             <Button x:Name="btnRefresh"
@@ -63,7 +63,7 @@
                                 <DataGridTextColumn Header="ID" Width="100" Binding="{Binding ID}" />
                                 <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding Vorname}" />
                                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Stadt" Width="*" Binding="{Binding Stadt.Name}" />
+                                <DataGridTextColumn Header="Stadt" Width="*" Binding="{Binding Stadt}" />
                             </DataGrid.Columns>
 
                         </DataGrid>

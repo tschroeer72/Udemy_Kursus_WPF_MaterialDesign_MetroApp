@@ -41,8 +41,11 @@ namespace Kursprojekt.UserControls
             using (new WaitProgressRing(pgRing))
             {
                 var persons = await Task.Run(() => DBUnit.Person.GetAll(includeModels: nameof(Stadt)));
-
-                dgPerson.ItemsSource = persons;
+                var lstPersonStadt = AppHelper.GetListPersonStadtVM_from_ListPersonStad(persons);
+                if (lstPersonStadt != null)
+                {
+                    dgPerson.ItemsSource = lstPersonStadt;
+                }
             }
         }
 
@@ -293,6 +296,30 @@ namespace Kursprojekt.UserControls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             Init();
+        }
+
+        private async void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var text = txtSearch.Text.Trim();
+            IEnumerable<Person>? lstPerson;
+            using (new WaitProgressRing(pgRing)) 
+            { 
+                if(text != string.Empty)
+                {
+                    lstPerson = await Task.Run(() => DBUnit.Person.GetAll(filter: p => p.Name.Contains(text) || p.Vorname.Contains(text), 
+                                                                            includeModels: "Stadt")                                                                        );
+                }
+                else
+                {
+                    lstPerson = await Task.Run(() => DBUnit.Person.GetAll(includeModels: "Stadt"));
+                }
+
+                if (lstPerson != null) 
+                {
+                    var lstPersonStadt = AppHelper.GetListPersonStadtVM_from_ListPersonStad(lstPerson);
+                    dgPerson.ItemsSource = lstPersonStadt;
+                }
+            }
         }
     }
 }
