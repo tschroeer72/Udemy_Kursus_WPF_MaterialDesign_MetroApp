@@ -473,7 +473,7 @@
                                                                 Width="170"
                                                                 Content="Aktualisieren"
                                                                 FontSize="18"
-                                                                FontWeight="Bold">
+                                                                FontWeight="Bold" Click="BtnEditPerson_Click">
                                                         </Button>
                                                     </StackPanel>
                                                 </Border>

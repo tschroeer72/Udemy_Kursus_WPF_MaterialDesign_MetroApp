@@ -22,6 +22,7 @@ namespace Kursprojekt.UserControls
     {
         private string? _SelectedFilepath = null;
         private PersonStadtVM? _SelectedPerson = null;
+        private PersonStadtVM? _SelectedPersonOhneDataContext = null;
         private List<Stadt>? _AllCities = null;
 
         public ucVerwaltung()
@@ -220,28 +221,56 @@ namespace Kursprojekt.UserControls
             return person;
         }
 
-        private void ShowValidationInfos(ValidationResult IValidationResult)
-        {
-            foreach (var err in IValidationResult.Errors)
+        private void ShowValidationInfos(ValidationResult IValidationResult, bool isEdit = false)
+        {          
+            if (isEdit) 
             {
-                if(err.PropertyName == nameof(Person.Name))
+                foreach (var err in IValidationResult.Errors)
                 {
-                    txtAddNameValidationInfo.Text = err.ErrorMessage;
-                }
+                    if (err.PropertyName == nameof(Person.Name))
+                    {
+                        txtEditNameValidationInfo.Text = err.ErrorMessage;
+                    }
 
-                if (err.PropertyName == nameof(Person.Vorname))
-                {
-                    txtAddVornameValidationInfo.Text = err.ErrorMessage;
-                }
+                    if (err.PropertyName == nameof(Person.Vorname))
+                    {
+                        txtEditVornameValidationInfo.Text = err.ErrorMessage;
+                    }
 
-                if (err.PropertyName == nameof(Person.StadtID))
-                {
-                    cboAddStadtValidationInfo.Text = err.ErrorMessage;
-                }
+                    if (err.PropertyName == nameof(Person.StadtID))
+                    {
+                        cboEditStadtValidationInfo.Text = err.ErrorMessage;
+                    }
 
-                if (err.PropertyName == nameof(Person.Bild))
+                    if (err.PropertyName == nameof(Person.Bild))
+                    {
+                        //
+                    }
+                }
+            }
+            else
+            {
+                foreach (var err in IValidationResult.Errors)
                 {
-                    //
+                    if (err.PropertyName == nameof(Person.Name))
+                    {
+                        txtAddNameValidationInfo.Text = err.ErrorMessage;
+                    }
+
+                    if (err.PropertyName == nameof(Person.Vorname))
+                    {
+                        txtAddVornameValidationInfo.Text = err.ErrorMessage;
+                    }
+
+                    if (err.PropertyName == nameof(Person.StadtID))
+                    {
+                        cboAddStadtValidationInfo.Text = err.ErrorMessage;
+                    }
+
+                    if (err.PropertyName == nameof(Person.Bild))
+                    {
+                        //
+                    }
                 }
             }
         }
@@ -265,6 +294,7 @@ namespace Kursprojekt.UserControls
             rbEditNichtabgeschlossen.IsChecked = true;
 
             _SelectedPerson = null;
+            _SelectedPersonOhneDataContext = null;
         }
 
         private async void BtnAddPerson_Click(object sender, RoutedEventArgs e)
@@ -297,7 +327,6 @@ namespace Kursprojekt.UserControls
             {
                 ShowValidationInfos(valResult);
             }
-
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -343,6 +372,7 @@ namespace Kursprojekt.UserControls
                 if (selectedPerson != null)
                 {
                     _SelectedPerson = MapperHelper.Map_PersonVMToPersonVM(selectedPerson);
+                    _SelectedPersonOhneDataContext = MapperHelper.Map_PersonVMToPersonVM(selectedPerson);
 
                     if (_SelectedPerson != null)
                     {
@@ -388,6 +418,46 @@ namespace Kursprojekt.UserControls
             {
                 new InfoDialog("Bitte wählen Sie eine Person aus!", IWDialogType.Information).ShowDialog();
             }
+        }
+
+        private void BtnEditPerson_Click(object sender, RoutedEventArgs e)
+        {           
+            if (_SelectedPerson != null && _SelectedPersonOhneDataContext != null)
+            { 
+                //Validationinfo leeren
+                ClearAllValidationInfos();
+
+                //Daten validieren
+                var personToEdit = MapperHelper.Map_PersonVMToPerson(_SelectedPerson);
+                var personValidator = new AddNewPersonValidator();
+                ValidationResult valResult = personValidator.Validate(personToEdit);
+                if (valResult.IsValid)
+                {
+                    ClearAllValidationInfos();
+
+                    var persName = _SelectedPersonOhneDataContext?.Name;
+                    var persID = _SelectedPerson?.ID;
+
+                    if (new InfoDialog($"Wollen Sie die Daten von {persName} wirklich aktualisieren?", IWDialogType.Bestätigen).ShowDialog() == true)
+                    {
+                        DBUnit.Person.Update(personToEdit);
+
+                        GetAllAndShowPersonsData();
+                        ClearAllValidationInfos();
+                        ClearAllControls();
+
+                        GlobVar.GlobMainWindow?.OpenButtonFlyout($"{persName} wurde aktualisiert");
+                    }
+                }
+                else
+                {
+                    ShowValidationInfos(valResult, true);
+                }
+            }
+            else
+            {
+                new InfoDialog("Bitte wählen Sie eine Person aus!", IWDialogType.Information).ShowDialog();
+            }            
         }
     }
 }
