@@ -1,4 +1,6 @@
-﻿using Kursprojekt.Helpers;
+﻿using Kursprojekt.AppWindows;
+using Kursprojekt.DTOs;
+using Kursprojekt.Helpers;
 using Kursprojekt.Validators;
 using Microsoft.Win32;
 using System.IO;
@@ -363,6 +365,14 @@ namespace Kursprojekt.UserControls
                     _SelectedPerson.Stadt = selectedStadt.Name;
                 }
             }                      
+        }
+
+        private void BtnDelPerson_Click(object sender, RoutedEventArgs e)
+        {
+            if(new InfoDialog("Wollen Sie wirklich löschen?", IWDialogType.Bestätigen).ShowDialog() == true)
+            {
+
+            }
         }
     }
 }

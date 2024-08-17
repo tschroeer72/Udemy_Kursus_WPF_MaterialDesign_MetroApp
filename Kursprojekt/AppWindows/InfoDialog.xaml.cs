@@ -23,7 +23,7 @@ namespace Kursprojekt.AppWindows
     {
         private string _Message { get; set; } = string.Empty;
         private IWDialogType _DialogType { get; set; } = new();
-        public string TextEingabe { get; set; } = string.Empty;
+        public string DialogInputText { get; set; } = string.Empty;
 
         public InfoDialog(string iMessage, IWDialogType eDialogType)
         {
@@ -40,6 +40,7 @@ namespace Kursprojekt.AppWindows
             BorderInputText.Visibility = Visibility.Collapsed;
 
             txtMessage.Text = _Message;
+            txtInputText.Clear();
 
             switch (_DialogType)
             {
@@ -68,34 +69,54 @@ namespace Kursprojekt.AppWindows
             }
         }
 
-        private void Grid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = false;
+            Close();
         }
 
         private void btnNein_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = false;
+            Close();
         }
 
         private void btnJa_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = true;
+            Close();
         }
 
         private void btnAbbrechen_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = false;
+            Close();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = true;
+            Close();
+        }
 
+        private void grdTitle_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if(e.LeftButton == MouseButtonState.Pressed)
+                {
+                    DragMove();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void txtInputText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            DialogInputText = txtInputText.Text;
         }
     }
 }

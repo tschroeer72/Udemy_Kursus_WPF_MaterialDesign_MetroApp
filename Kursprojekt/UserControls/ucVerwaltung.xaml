@@ -465,7 +465,7 @@
                                                             Width="170"
                                                             Content="Löschen"
                                                             FontSize="18"
-                                                            FontWeight="Bold">
+                                                            FontWeight="Bold" Click="BtnDelPerson_Click">
                                                         </Button>
                                                         <Button x:Name="BtnEditPerson"
                                                                 Style="{StaticResource ButtonStyle}"

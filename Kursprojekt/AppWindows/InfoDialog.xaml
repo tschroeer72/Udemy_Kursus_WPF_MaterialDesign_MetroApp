@@ -26,20 +26,21 @@
                 <!-- Titel und Close -->
                 <Grid Grid.Row="0" 
                       Background="{StaticResource AppBrushColorCyan}"
-                      Cursor="Hand"
-                      PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown">
+                      Cursor="Hand">
                     <md:Card Background="{StaticResource AppBrushColorCyan}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" x:Name="lblTitle" Content="Titel"
-                                    Margin="8 0" HorizontalAlignment="Stretch"
-                                    Height="40" BorderThickness="0"
-                                    Foreground="White" FontWeight="Bold"
-                                    FontSize="20" VerticalContentAlignment="Center">
-                            </Label>
+                            <Grid x:Name="grdTitle"  Grid.Column="0" PreviewMouseLeftButtonDown="grdTitle_PreviewMouseLeftButtonDown">
+                                <Label x:Name="lblTitle" Content="Titel"
+                                        Margin="8 0" HorizontalAlignment="Stretch"
+                                        Height="40" BorderThickness="0"
+                                        Foreground="White" FontWeight="Bold"
+                                        FontSize="20" VerticalContentAlignment="Center">
+                                </Label>
+                            </Grid>
                             <Button Grid.Column="1" Width="35" Height="35"
                                     x:Name="btnClose"
                                     Style="{StaticResource MaterialDesignFloatingActionButton}"
@@ -73,7 +74,7 @@
                                  MinWidth="300"
                                  md:HintAssist.Hint="Eingabe"
                                  Foreground="{StaticResource AppBrushColorBlue}"
-                                 Cursor="Hand">                            
+                                 Cursor="Hand" TextChanged="txtInputText_TextChanged">                            
                         </TextBox>
                     </Border>
                 </Grid>
