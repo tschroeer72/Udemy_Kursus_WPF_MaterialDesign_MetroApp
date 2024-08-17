@@ -212,7 +212,7 @@ namespace Kursprojekt.UserControls
             var person = new Person();
             person.Name = txtAddName.Text.Trim();
             person.Vorname = txtAddVorname.Text.Trim();
-            person.StadtID = (cboAddStadt.SelectedIndex < 0) ? -1 : (int)cboAddStadt.SelectedValue;
+            person.StadtID = (cboAddStadt.SelectedIndex < 0) ? -1 : (int)(cboAddStadt.SelectedItem as Stadt)?.ID;
             person.Bild = (_SelectedFilepath is not null) ? File.ReadAllBytes(_SelectedFilepath) : null;
             person.Infiziert = rbInfiziert.IsChecked == true ? true : false;
             person.TestAbgeschlossen = rbAbgeschlossen.IsChecked == true ? true : false;
@@ -369,9 +369,24 @@ namespace Kursprojekt.UserControls
 
         private void BtnDelPerson_Click(object sender, RoutedEventArgs e)
         {
-            if(new InfoDialog("Wollen Sie wirklich löschen?", IWDialogType.Bestätigen).ShowDialog() == true)
+            if (_SelectedPerson != null)
             {
+                var persName = _SelectedPerson.Name;
+                var persID = _SelectedPerson.ID;
 
+                if (new InfoDialog($"Wollen Sie {persName} wirklich löschen?", IWDialogType.Bestätigen).ShowDialog() == true)
+                {
+                    DBUnit.Person.DeleteByID(persID);
+                    GetAllAndShowPersonsData();
+                    ClearAllValidationInfos();
+                    ClearAllControls();
+
+                    GlobVar.GlobMainWindow?.OpenButtonFlyout($"{persName} wurde gelöscht");
+                }
+            }
+            else
+            {
+                new InfoDialog("Bitte wählen Sie eine Person aus!", IWDialogType.Information).ShowDialog();
             }
         }
     }
