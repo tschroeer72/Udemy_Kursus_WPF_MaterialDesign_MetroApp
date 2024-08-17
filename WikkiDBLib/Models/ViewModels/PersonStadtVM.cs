@@ -56,7 +56,7 @@ namespace WikkiDBLib.Models.ViewModels
             }
             set
             {
-                if (value.UriSource != null)
+                if (value != null && value.UriSource != null)
                 {
                     Bild = File.ReadAllBytes(value.UriSource.OriginalString);
                 }

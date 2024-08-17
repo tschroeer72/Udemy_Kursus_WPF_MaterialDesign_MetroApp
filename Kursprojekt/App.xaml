@@ -11,10 +11,11 @@
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Teal.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
                 <!-- MaterialDesign Theme -->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Cyan.xaml" />
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
@@ -259,7 +260,8 @@
             
                 <!-- ListViewItems -->
             <Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
-                <Setter Property="Height" Value="50"/>                
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListViewItem">
@@ -295,6 +297,7 @@
             <!-- ListBoxItem-->
             <Style x:Key="ListBoxCitiesItemStyle" TargetType="ListBoxItem">
                 <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListBoxItem">
@@ -331,8 +334,8 @@
             <Style x:Key="ComboboxItemStyle" TargetType="ComboBoxItem">
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
-                <Setter Property="Foreground" Value="{StaticResource AppBrushColorCyan}"/>
-                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Cursor" Value="Hand"/>
                 <Style.Triggers>

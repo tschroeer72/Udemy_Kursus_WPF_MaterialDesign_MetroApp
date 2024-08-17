@@ -238,9 +238,9 @@
                                                               Padding="0 2 0 0"
                                                               Margin="0 2"
                                                               DisplayMemberPath="Stadt"
-                                                              SelectedValuePath="ID"
+                                                              SelectedValuePath="StadtID"
                                                               md:HintAssist.Hint="Stadt:"
-                                                             Background="Transparent"
+                                                              Style="{StaticResource Combobox}"
                                                              Cursor="Hand">
                                                     </ComboBox>
                                                     <TextBlock x:Name="cboAddStadtValidationInfo"
@@ -394,10 +394,10 @@
                                                               Padding="0 2 0 0"
                                                               Margin="0 2"
                                                               DisplayMemberPath="Stadt"
-                                                              SelectedValuePath="StandtID"
+                                                              SelectedValuePath="StandID"
                                                               md:HintAssist.Hint="Stadt:"
-                                                             Background="Transparent"
-                                                             Cursor="Hand">
+                                                              Style="{StaticResource Combobox}"
+                                                             Cursor="Hand" SelectionChanged="cboEditStadt_SelectionChanged">
                                                     </ComboBox>
                                                     <TextBlock x:Name="cboEditStadtValidationInfo"
                                                                HorizontalAlignment="Center"

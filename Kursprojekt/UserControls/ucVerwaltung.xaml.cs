@@ -20,6 +20,7 @@ namespace Kursprojekt.UserControls
     {
         private string? _SelectedFilepath = null;
         private PersonStadtVM? _SelectedPerson = null;
+        private List<Stadt>? _AllCities = null;
 
         public ucVerwaltung()
         {
@@ -30,11 +31,11 @@ namespace Kursprojekt.UserControls
         {
             using (new WaitProgressRing(pgRing))
             {
-                var cities = await Task.Run(() => DBUnit.Stadt.GetAll());
+                _AllCities = await Task.Run(() => DBUnit.Stadt.GetAll()?.ToList());
 
-                lstCities.ItemsSource = cities;
-                cboAddStadt.ItemsSource = cities;
-                cboEditStadt.ItemsSource = cities;
+                lstCities.ItemsSource = _AllCities;
+                cboAddStadt.ItemsSource = _AllCities;
+                cboEditStadt.ItemsSource = _AllCities;
             }
         }
 
@@ -260,6 +261,8 @@ namespace Kursprojekt.UserControls
             cboEditStadt.SelectedIndex = -1;
             rbEditInfiziert.IsChecked = true;
             rbEditNichtabgeschlossen.IsChecked = true;
+
+            _SelectedPerson = null;
         }
 
         private async void BtnAddPerson_Click(object sender, RoutedEventArgs e)
@@ -333,13 +336,33 @@ namespace Kursprojekt.UserControls
 
             if (dgPerson.SelectedItem != null) 
             {
-                _SelectedPerson = dgPerson.SelectedItem as PersonStadtVM;
-                if (_SelectedPerson != null) 
-                { 
-                    grdPersonEdit.DataContext = _SelectedPerson;
+                var selectedPerson = dgPerson.SelectedItem as PersonStadtVM;
+
+                if (selectedPerson != null)
+                {
+                    _SelectedPerson = MapperHelper.Map_PersonVMToPersonVM(selectedPerson);
+
+                    if (_SelectedPerson != null)
+                    {
+                        grdPersonEdit.DataContext = _SelectedPerson;
+                        cboEditStadt.SelectedItem = _AllCities?.Where(s => s.ID == _SelectedPerson.StadtID).FirstOrDefault();
+                    }
                 }
             }
 
+        }
+
+        private void cboEditStadt_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedStadt = cboEditStadt.SelectedItem as Stadt;
+            if (selectedStadt != null)
+            {
+                if (_SelectedPerson != null)
+                {
+                    _SelectedPerson.StadtID = selectedStadt.ID;
+                    _SelectedPerson.Stadt = selectedStadt.Name;
+                }
+            }                      
         }
     }
 }
