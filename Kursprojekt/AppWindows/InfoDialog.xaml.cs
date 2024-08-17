@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Kursprojekt.DTOs;
+using Kursprojekt.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,51 @@ namespace Kursprojekt.AppWindows
     /// </summary>
     public partial class InfoDialog : Window
     {
-        public InfoDialog()
+        private string _Message { get; set; } = string.Empty;
+        private IWDialogType _DialogType { get; set; } = new();
+        public string TextEingabe { get; set; } = string.Empty;
+
+        public InfoDialog(string iMessage, IWDialogType eDialogType)
         {
             InitializeComponent();
+
+            Owner = GlobVar.GlobMainWindow;
+
+            _Message = iMessage;
+            _DialogType = eDialogType;
+
+            grdJaNein.Visibility = Visibility.Collapsed;
+            grdOKCancel.Visibility = Visibility.Collapsed;
+            txtInputText.Visibility = Visibility.Collapsed;
+            BorderInputText.Visibility = Visibility.Collapsed;
+
+            txtMessage.Text = _Message;
+
+            switch (_DialogType)
+            {
+                case IWDialogType.Information:
+                    lblTitle.Content = "Information";
+                    grdOKCancel.Visibility = Visibility.Visible;
+                    btnAbbrechen.Visibility = Visibility.Collapsed;
+                    break;
+                case IWDialogType.Bestätigen:
+                    lblTitle.Content = "Bestätigen";
+                    grdJaNein.Visibility = Visibility.Visible;
+                    break;
+                case IWDialogType.Warnung:
+                    lblTitle.Content = "Warnung";
+                    txtMessage.Foreground = Brushes.DarkRed;
+                    grdOKCancel.Visibility = Visibility.Visible;
+                    btnAbbrechen.Visibility = Visibility.Collapsed;
+                    break;
+                case IWDialogType.Texteingabe:
+                    lblTitle.Content = "Texteingabe";
+                    BorderInputText.Visibility = Visibility.Visible;
+                    grdOKCancel.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Grid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
