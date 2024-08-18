@@ -460,9 +460,40 @@ namespace Kursprojekt.UserControls
             }            
         }
 
-        private void BtnDeleteCity_Click(object sender, RoutedEventArgs e)
+        private async void BtnDeleteCity_Click(object sender, RoutedEventArgs e)
         {
+            if (lstCities.Items.Count > 0)
+            {
+                var selCity = lstCities.SelectedItem as Stadt;
+                if (selCity != null)
+                {
+                    List<Person>? person = null;
+                    using (new WaitProgressRing(pgRingCity))
+                        person = await Task.Run(() => DBUnit.Person.GetAll(filter: p => p.StadtID == selCity.ID).ToList());
 
+                    if (person == null)
+                    {
+                        var stadtName = selCity.Name;
+                        var stadtID = selCity.ID;
+                        if (new InfoDialog($"Wollen Sie {stadtName} wirklich löschen?", IWDialogType.Bestätigen).ShowDialog() == true)
+                        {
+                            bool erg = false;
+                            using (new WaitProgressRing(pgRingCity))
+                                erg = await Task.Run(() => DBUnit.Stadt.DeleteByID(stadtID));
+                            if (erg)
+                            {
+                                GetAllAndShowCitiesData();
+                                GlobVar.GlobMainWindow.OpenButtonFlyout($"{stadtName} wurde gelöscht");
+                            }                            
+                        }
+                    }
+                    else
+                    {
+                        new InfoDialog($"{selCity.Name} kann nicht gelöscht werden, da noch Personen dieser Stadt zugeordnet sind", IWDialogType.Information).ShowDialog();
+                    }
+                }
+            }
+            
         }
 
         private async void txtAddNewCity_TextChanged(object sender, TextChangedEventArgs e)

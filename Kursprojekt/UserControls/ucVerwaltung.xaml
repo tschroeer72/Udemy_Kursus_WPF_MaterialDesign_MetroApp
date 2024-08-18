@@ -558,6 +558,8 @@
                                                 </ListBox>
                                             </Border>
                                             <mah:ProgressRing x:Name="pgRingCity"
+                                                              VerticalAlignment="Top"
+                                                              Margin="0 20 0 0"
                                                               Visibility="Hidden"
                                                               Foreground="{StaticResource AppBrushColorCyan}"
                                                               Width="80"

@@ -96,6 +96,26 @@ namespace WikkiDBLib.DBAccess
             }
         }
 
+        //public bool GetByID(int ID)
+        //{
+        //    try
+        //    {
+        //        if (ID <= 0) 
+        //            return false;
+
+        //        var model = _dbSet?.Find(ID);
+        //        if(model == null) 
+        //            return false;
+
+        //        return true;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        MessageBox.Show("GetByID" + Environment.NewLine + ex.Message);
+        //        return false;
+        //    }
+        //}
+
         public IEnumerable<Model>? GetAll(Expression<Func<Model, bool>>? filter = null, string? includeModels = null)
         {
             try
