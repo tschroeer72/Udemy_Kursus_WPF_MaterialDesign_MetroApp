@@ -32,7 +32,7 @@ namespace Kursprojekt.UserControls
 
         private async void GetAllAndShowCitiesData()
         {
-            using (new WaitProgressRing(pgRing))
+            using (new WaitProgressRing(pgRingCity))
             {
                 _AllCities = await Task.Run(() => DBUnit.Stadt.GetAll()?.ToList());
 
@@ -458,6 +458,79 @@ namespace Kursprojekt.UserControls
             {
                 new InfoDialog("Bitte wählen Sie eine Person aus!", IWDialogType.Information).ShowDialog();
             }            
+        }
+
+        private void BtnDeleteCity_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void txtAddNewCity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var text = txtAddName.Text.Trim();
+            using (new WaitProgressRing(pgRingCity))
+            {
+                if (text != string.Empty)
+                {
+                    lstCities.ItemsSource = await Task.Run(() => DBUnit.Stadt.GetAll(filter: p => p.Name.Contains(text)));
+                    //lstCities.ItemsSource = DBUnit.Stadt.GetAll(filter: p => p.Name.Contains(text));
+                }
+                else
+                {
+                    lstCities.ItemsSource = await Task.Run(() => DBUnit.Person.GetAll());
+                    //lstCities.ItemsSource = DBUnit.Person.GetAll();
+                }
+            }
+        }
+
+        private bool IsCityExisting(string oStadt)
+        {
+            foreach (var item in lstCities.Items)
+            {
+                var city = item as Stadt;
+                if (city != null) 
+                { 
+                if(city.Name.ToLower() == oStadt.ToLower())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private async void BtnAddNewCity_Click(object sender, RoutedEventArgs e)
+        {
+            var text = txtAddNewCity.Text.Trim();
+            if (text != string.Empty)
+            {
+                if (IsCityExisting(text))
+                {
+                    new InfoDialog($"{text} bereits vorhanden!", IWDialogType.Information).ShowDialog();
+                }
+                else
+                {
+                    using (new WaitProgressRing(pgRingCity))
+                    {
+                        var neueStadt = new Stadt()
+                        {
+                            Name = text
+                        };
+                        var erg = await Task.Run(() => DBUnit.Stadt.Add(neueStadt));
+                        //var erg = DBUnit.Stadt.Add(neueStadt);
+                        if (erg)
+                        {
+                            txtAddName.Clear();
+                            GetAllAndShowCitiesData();
+                            GlobVar.GlobMainWindow?.OpenButtonFlyout($"{text} wurde hinzugefügt");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                new InfoDialog("Geben Sie eine Standt ein", IWDialogType.Information).ShowDialog();
+            }
         }
     }
 }
