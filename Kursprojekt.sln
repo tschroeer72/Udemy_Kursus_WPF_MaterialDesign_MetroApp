@@ -5,7 +5,12 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kursprojekt", "Kursprojekt\Kursprojekt.csproj", "{BFB82F85-F726-4ED9-ADA6-7E8C0E48D993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikkiDBLib", "WikkiDBLib\WikkiDBLib.csproj", "{07F3EE10-6F04-4DA0-9F58-A7D0171D9B00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikkiDBLib", "WikkiDBLib\WikkiDBLib.csproj", "{07F3EE10-6F04-4DA0-9F58-A7D0171D9B00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{936CD1F4-24CE-47F0-9020-5C1703C9ECD7}"
+	ProjectSection(SolutionItems) = preProject
+		Kursbewertung.txt = Kursbewertung.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -237,10 +237,10 @@
                                                              Width="340"
                                                               Padding="0 2 0 0"
                                                               Margin="0 2"
-                                                              DisplayMemberPath="Stadt"
+                                                              DisplayMemberPath="Name"
                                                               SelectedValuePath="StadtID"
                                                               md:HintAssist.Hint="Stadt:"
-                                                              Style="{StaticResource Combobox}"
+                                                              Style="{StaticResource ComboBoxStyle}"
                                                              Cursor="Hand">
                                                     </ComboBox>
                                                     <TextBlock x:Name="cboAddStadtValidationInfo"
@@ -393,10 +393,10 @@
                                                              Width="340"
                                                               Padding="0 2 0 0"
                                                               Margin="0 2"
-                                                              DisplayMemberPath="Stadt"
-                                                              SelectedValuePath="StandID"
+                                                              DisplayMemberPath="Name"
+                                                              SelectedValuePath="StadtID"
                                                               md:HintAssist.Hint="Stadt:"
-                                                              Style="{StaticResource Combobox}"
+                                                              Style="{StaticResource ComboBoxStyle}"
                                                              Cursor="Hand" SelectionChanged="cboEditStadt_SelectionChanged">
                                                     </ComboBox>
                                                     <TextBlock x:Name="cboEditStadtValidationInfo"
