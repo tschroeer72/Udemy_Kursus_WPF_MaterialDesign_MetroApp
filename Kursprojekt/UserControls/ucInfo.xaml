@@ -10,7 +10,46 @@
              d:DesignHeight="550" d:DesignWidth="1100">
     <Grid Background="{StaticResource AppBrushColorBlue}" Margin="4 2">
         <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn,Duration=0:0:0.4}">
-            <TextBlock Text="HOME" Foreground="White" FontWeight="Bold" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Border Grid.Row="0"
+                        BorderThickness="0 0 0 4"
+                        BorderBrush="{StaticResource AppBrushColorCyan}"
+                        CornerRadius="0 0 30 30"
+                        Padding="10"
+                        Margin="4">
+                    <Grid>
+                        <Grid Width="200"
+                              HorizontalAlignment="Left"
+                              Panel.ZIndex="1">
+                            <RepeatButton></RepeatButton>
+                        </Grid>
+
+                        <Grid HorizontalAlignment="Stretch"
+                              Panel.ZIndex="0">
+                            <ListBox>
+                                
+                            </ListBox>
+                        </Grid>
+                        
+                        <Grid Width="200"
+                              HorizontalAlignment="Right"
+                              Panel.ZIndex="1">
+                            <RepeatButton></RepeatButton>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1">
+                    <Grid x:Name="grdPlaceholder"/>
+                </Border>
+
+            </Grid>
+            
         </md:TransitioningContent>
     </Grid>
 </UserControl>
