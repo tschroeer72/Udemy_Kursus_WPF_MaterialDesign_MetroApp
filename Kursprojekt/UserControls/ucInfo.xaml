@@ -8,6 +8,50 @@
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="1100">
+    
+    <UserControl.Resources>
+        <Style x:Key="BtnListBoxStyle" TargetType="RepeatButton">
+            <Setter Property="Foreground" Value="{StaticResource AppBrushColorCyan}"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                Height="100" Width="100"
+                                CornerRadius="50"
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource AppBrushColorCyan}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center">
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource AppBrushColorCyan}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RpBtnGridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Opacity" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding ElementName=lstPerson, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid Background="{StaticResource AppBrushColorBlue}" Margin="4 2">
         <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn,Duration=0:0:0.4}">
             <Grid>
@@ -17,29 +61,49 @@
                 </Grid.RowDefinitions>
                 
                 <Border Grid.Row="0"
+                        Background="White"
                         BorderThickness="0 0 0 4"
                         BorderBrush="{StaticResource AppBrushColorCyan}"
                         CornerRadius="0 0 30 30"
                         Padding="10"
                         Margin="4">
                     <Grid>
-                        <Grid Width="200"
+                        <Grid Style="{StaticResource RpBtnGridStyle}"
                               HorizontalAlignment="Left"
                               Panel.ZIndex="1">
-                            <RepeatButton></RepeatButton>
+                            <RepeatButton x:Name="rpBtnGoBack" Style="{StaticResource BtnListBoxStyle}">
+                                <md:PackIcon Kind="ChevronLeft" Height="100" Width="100"></md:PackIcon>
+                            </RepeatButton>
                         </Grid>
 
                         <Grid HorizontalAlignment="Stretch"
                               Panel.ZIndex="0">
-                            <ListBox>
-                                
+                            <ListBox x:Name="lstPerson"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            
+                                        </StackPanel>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
                             </ListBox>
+
+                            <mah:ProgressRing x:Name="pgRing" IsActive="True"
+                                              Height="100" Width="100"
+                                                  Visibility="Collapsed"
+                                                  Foreground="{StaticResource AppBrushColorCyan}">
+
+                            </mah:ProgressRing>
                         </Grid>
                         
-                        <Grid Width="200"
+                        <Grid Style="{StaticResource RpBtnGridStyle}"
                               HorizontalAlignment="Right"
                               Panel.ZIndex="1">
-                            <RepeatButton></RepeatButton>
+                            <RepeatButton x:Name="rpBtnGoForward" Style="{StaticResource BtnListBoxStyle}">
+                                <md:PackIcon Kind="ChevronRight" Height="100" Width="100"></md:PackIcon>
+                            </RepeatButton>
                         </Grid>
                     </Grid>
                 </Border>
