@@ -7,10 +7,12 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="1100">
+             d:DesignHeight="550" d:DesignWidth="1100" Loaded="UserControl_Loaded">
     
     <UserControl.Resources>
         <Style x:Key="BtnListBoxStyle" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
             <Setter Property="Foreground" Value="{StaticResource AppBrushColorCyan}"/>
             <Setter Property="Margin" Value="8"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -50,6 +52,64 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="ListBoxItemPersonStyle" TargetType="ListBoxItem">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="200"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <md:Card Background="{StaticResource AppBrushColorBlue}"
+                                 Margin="4 0">
+                            <Border x:Name="TemplateBorder"
+                                    BorderThickness="2"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}"
+                                    CornerRadius="22"
+                                    UseLayoutRounding="True"
+                                    SnapsToDevicePixels="True">
+                                <StackPanel Orientation="Vertical">
+                                    <Ellipse Width="140" Height="140" Margin="4">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="{Binding BitmapImage}" Stretch="UniformToFill" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Label Content="{Binding VornameName}" 
+                                           FontSize="14" 
+                                           Foreground="White"
+                                           FontWeight="Bold" FontFamily="Roboto"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center">                                        
+                                    </Label>
+                                    <Label Content="{Binding Stadt}" 
+                                           FontSize="14"  
+                                           Foreground="White"
+                                           FontWeight="ExtraBold" FontFamily="Roboto"
+                                           Padding="0 4 0 0"
+                                           HorizontalContentAlignment="Center">                                        
+                                    </Label>
+                                    <Border Background="Transparent"
+                                            Height="24"
+                                            CornerRadius="0 0 40 40"
+                                            Margin="10 0">
+                                        <Border Background="Transparent"
+                                                Width="24" Height="24">
+                                            <md:PackIcon Kind="ArrowDownBoldBox" 
+                                                     Foreground="{StaticResource AppBrushColorBlue}"
+                                                         VerticalAlignment="Center"
+                                                     Width="24" Height="24">
+                                            </md:PackIcon>
+                                        </Border>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </md:Card>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     
     <Grid Background="{StaticResource AppBrushColorBlue}" Margin="4 2">
@@ -79,6 +139,7 @@
                         <Grid HorizontalAlignment="Stretch"
                               Panel.ZIndex="0">
                             <ListBox x:Name="lstPerson"
+                                     ItemContainerStyle="{StaticResource ListBoxItemPersonStyle}"
                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                 <ListBox.ItemsPanel>

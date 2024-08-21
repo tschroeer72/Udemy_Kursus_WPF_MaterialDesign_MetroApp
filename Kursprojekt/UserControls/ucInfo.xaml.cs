@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kursprojekt.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WikkiDBLib.DBAccess;
+using WikkiDBLib.Modells;
 
 namespace Kursprojekt.UserControls
 {
@@ -23,6 +26,23 @@ namespace Kursprojekt.UserControls
         public ucInfo()
         {
             InitializeComponent();
+        }
+
+        private async Task GetPersons()
+        {
+            using (new WaitProgressRing(pgRing))
+            {
+                var PersonListe = await Task.Run(() => DBUnit.Person.GetAll(includeModels: nameof(Stadt)));
+                if (PersonListe != null)
+                {
+                    lstPerson.ItemsSource = AppHelper.GetListPersonStadtVM_from_ListPersonStad(PersonListe);
+                }
+            }
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            await GetPersons();
         }
     }
 }
