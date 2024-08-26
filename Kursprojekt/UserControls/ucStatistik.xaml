@@ -6,12 +6,132 @@
              xmlns:local="clr-namespace:Kursprojekt.UserControls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="AntiqueWhite">
+             SnapsToDevicePixels="True"
+             UseLayoutRounding="True"
+             d:DesignHeight="650" d:DesignWidth="1200">
+    <Grid Background="{StaticResource AppBrushColorBlue}">
         <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn,Duration=0:0:0.4}">
-            <TextBlock Text="Statistik" FontWeight="Bold" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="450"/>
+                    <ColumnDefinition Width="650"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
+                <!-- Grid.Column="0" -->
+                <Grid Grid.Column="0" Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- PackIcon -->
+                    <Grid Grid.Row="0">
+                        <md:PackIcon Kind="CityVariantOutline"
+                                     Foreground="White"
+                                     Height="180" Width="400"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center">                            
+                        </md:PackIcon>
+                    </Grid>
+                    
+                    <!-- Search und Button -->
+                    <Grid Grid.Row="1">
+                        <StackPanel Orientation="Horizontal"
+                                    Height="44"
+                                    HorizontalAlignment="Left">
+                            <TextBox x:Name="txtSearchCity"
+                                     Width="200"
+                                     md:HintAssist.Hint="Stadt suchen">                                
+                            </TextBox>
+
+                            <Button x:Name="btnRefresh"
+                                    Content="Daten aufrufen"
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    Width="220"
+                                    Margin="10 10 0 0 ">                                
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <!-- Listbox und Progressring -->
+                    <Grid Grid.Row="2">
+                        <Border Margin="0 8 0 0"
+                                Padding="4"
+                                VerticalAlignment="Top"
+                                CornerRadius="18"
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource AppBrushColorCyan}">
+                            <ListBox x:Name="lstCities"
+                                     VerticalAlignment="Top"
+                                     Background="{StaticResource AppBrushColorBlue}"
+                                     ItemContainerStyle="{StaticResource ListBoxCitiesItemStyle}">                                
+                            </ListBox>
+                        </Border>
+                        
+                        <mah:ProgressRing x:Name="pgRing"
+                                          Visibility="Hidden"
+                                          Foreground="{StaticResource AppBrushColorCyan}"
+                                          Height="80" Width="80">                            
+                        </mah:ProgressRing>
+                    </Grid>
+                </Grid>
+
+                <!-- Grid.Column="1" -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="500"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Titel -->
+                    <Grid Grid.Row="0">
+                        <Label Content="Test Analyse"
+                               FontSize="30"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" 
+                               FontFamily="Roboto">                            
+                        </Label>
+                    </Grid>
+                    
+                    <!-- Charts und Progressring -->
+                    <Border Grid.Row="1"
+                            Background="Teal"
+                            CornerRadius="50"
+                            Margin="8 2">
+                        <Grid VerticalAlignment="Top"
+                              HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="300"/>
+                                <RowDefinition Height="200"/>
+                            </Grid.RowDefinitions>
+                            
+                            <!-- Balken Chart -->
+                            <Grid Grid.Row="0">
+                                
+                            </Grid>
+                            
+                            <!-- Piw Chart -->
+                            <Grid Grid.Row="1">
+
+                            </Grid>
+
+                            <mah:ProgressRing x:Name="pgRingCharts"
+                                              Visibility="Hidden"
+                                              Foreground="{StaticResource AppBrushColorCyan}"
+                                              Height="80" Width="80">                                
+                            </mah:ProgressRing>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
         </md:TransitioningContent>
     </Grid>
 </UserControl>
