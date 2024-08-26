@@ -30,7 +30,7 @@ namespace Kursprojekt.UserControls
             InitializeComponent();
         }
 
-        private async Task GetPersons()
+        public async Task GetPersonsAsync()
         {
             using (new WaitProgressRing(pgRing))
             {
@@ -43,9 +43,14 @@ namespace Kursprojekt.UserControls
             }
         }
 
+        public async Task PersonSuchenAsync()
+        {
+
+        }
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            await GetPersons();
+            await GetPersonsAsync();
         }
 
         private void rpBtnGoForward_Click(object sender, RoutedEventArgs e)

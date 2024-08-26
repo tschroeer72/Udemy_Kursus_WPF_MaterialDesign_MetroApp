@@ -248,12 +248,39 @@
                             </ToggleButton.Style>
                         </ToggleButton>
                         <StackPanel x:Name="StackPanelSuchen" Orientation="Horizontal">
-                            <TextBox md:HintAssist.Hint="Name suchen"
-                                     FontSize="16" 
-                                     Width="220" 
-                                     Margin="8 0"
-                                     Background="Transparent"
-                                     Foreground="White"/>
+                            <!-- Separator -->
+                            <Rectangle Width="4" 
+                                       Fill="{StaticResource AppBrushColorCyan}"
+                                       Margin="20 0 10 0"/>
+                            <!-- Textbox "Person suchen" -->
+                            <TextBox x:Name="txtSearchPerson"
+                                     md:HintAssist.Hint="Name suchen"
+                                     FontSize="14" 
+                                     Width="190" 
+                                     Cursor="IBeam"
+                                     Foreground="White" 
+                                     Background="{StaticResource AppBrushColorBlue}"
+                                     TextChanged="txtSearchPerson_TextChanged"/>
+                            <!-- Separator -->
+                            <Rectangle Width="4" 
+                                       Fill="{StaticResource AppBrushColorCyan}"
+                                       Margin="20 0 10 0"/>
+                            <!-- Button aktualisieren-->
+                            <Border Width="36" Height="36"
+                                    Cursor="Hand"
+                                    Padding="0"
+                                    BorderThickness="2"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}"
+                                    CornerRadius="50">
+                                <Button x:Name="btnRefresh"
+                                        BorderThickness="0"
+                                        Style="{StaticResource MahApps.Styles.Button.Circle}" Click="btnRefresh_Click">
+                                    <md:PackIcon Kind="SyncCircle"
+                                                 Width="30" Height="30"
+                                                 Foreground="White">
+                                    </md:PackIcon>
+                                </Button>
+                            </Border>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

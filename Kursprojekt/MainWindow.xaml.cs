@@ -203,5 +203,16 @@ namespace Kursprojekt
         {
             _OpenCloseFlyout(1);
         }
+
+        private void txtSearchPerson_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private async void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            txtSearchPerson.Clear();
+            await _ucInfo!.GetPersonsAsync();
+        }
     }
 }
