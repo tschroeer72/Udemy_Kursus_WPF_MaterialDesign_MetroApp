@@ -115,12 +115,43 @@
                             
                             <!-- Balken Chart -->
                             <Grid Grid.Row="0">
-                                
+                                <lc:CartesianChart Name="BarChart"
+                                                   LegendLocation="Top"
+                                                   Cursor="Hand"
+                                                   Series="{Binding }">
+                                    <lc:CartesianChart.ChartLegend>
+                                        <lc:DefaultLegend BulletSize="40"
+                                                          FontSize="20"
+                                                          FontWeight="ExtraBold"
+                                                          Foreground="White">                                            
+                                        </lc:DefaultLegend>
+                                    </lc:CartesianChart.ChartLegend>
+                                    
+                                    <lc:CartesianChart.DataTooltip>
+                                        <lc:DefaultTooltip BulletSize="50"
+                                                           FontSize="30">                                            
+                                        </lc:DefaultTooltip>
+                                    </lc:CartesianChart.DataTooltip>
+
+                                    <lc:CartesianChart.AxisX>
+                                        <lc:Axis ShowLabels="False">                                            
+                                        </lc:Axis>
+                                    </lc:CartesianChart.AxisX>
+
+                                    <lc:CartesianChart.AxisY>
+                                        <lc:Axis x:Name="CharAxisY"
+                                                 FontSize="30"
+                                                 FontWeight="ExtraBold"
+                                                 Foreground="White"
+                                                 MinValue="0">
+                                        </lc:Axis>
+                                    </lc:CartesianChart.AxisY>
+                                </lc:CartesianChart>
                             </Grid>
                             
-                            <!-- Piw Chart -->
+                            <!-- Pie Chart -->
                             <Grid Grid.Row="1">
-
+                                
                             </Grid>
 
                             <mah:ProgressRing x:Name="pgRingCharts"
