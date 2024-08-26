@@ -45,7 +45,7 @@
                                     HorizontalAlignment="Left">
                             <TextBox x:Name="txtSearchCity"
                                      Width="200"
-                                     md:HintAssist.Hint="Stadt suchen">                                
+                                     md:HintAssist.Hint="Stadt suchen" TextChanged="txtSearchCity_TextChanged">                                
                             </TextBox>
 
                             <Button x:Name="btnRefresh"
@@ -53,7 +53,7 @@
                                     FontSize="20"
                                     FontWeight="Bold"
                                     Width="220"
-                                    Margin="10 10 0 0 ">                                
+                                    Margin="10 10 0 0 " Click="btnRefresh_Click">                                
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -69,7 +69,7 @@
                             <ListBox x:Name="lstCities"
                                      VerticalAlignment="Top"
                                      Background="{StaticResource AppBrushColorBlue}"
-                                     ItemContainerStyle="{StaticResource ListBoxCitiesItemStyle}">                                
+                                     ItemContainerStyle="{StaticResource ListBoxCitiesItemStyle}" SelectionChanged="lstCities_SelectionChanged">                                
                             </ListBox>
                         </Border>
                         
@@ -151,7 +151,21 @@
                             
                             <!-- Pie Chart -->
                             <Grid Grid.Row="1">
-                                
+                                <lc:PieChart Name="PieChart"
+                                             InnerRadius="50"
+                                             Cursor="Hand"
+                                             Series="{Binding}" DataClick="PieChart_DataClick">
+                                    <lc:PieChart.ChartLegend>
+                                        <lc:DefaultLegend Visibility="Collapsed"/>
+                                    </lc:PieChart.ChartLegend>
+                                    
+                                    <lc:DefaultTooltip>
+                                        <lc:DefaultTooltip BulletSize="50"
+                                                           FontSize="30"
+                                                           SelectionMode="OnlySender">
+                                        </lc:DefaultTooltip>                                        
+                                    </lc:DefaultTooltip>
+                                </lc:PieChart>
                             </Grid>
 
                             <mah:ProgressRing x:Name="pgRingCharts"

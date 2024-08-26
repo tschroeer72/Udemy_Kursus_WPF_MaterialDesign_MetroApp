@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiveCharts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,26 @@ namespace Kursprojekt.UserControls
         public ucStatistik()
         {
             InitializeComponent();
+        }
+
+        private void PieChart_DataClick(object sender, ChartPoint chartPoint)
+        {
+
+        }
+
+        private void txtSearchCity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void lstCities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
