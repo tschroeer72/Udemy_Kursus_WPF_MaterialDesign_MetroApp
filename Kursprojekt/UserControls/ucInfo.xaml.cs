@@ -25,9 +25,12 @@ namespace Kursprojekt.UserControls
     /// </summary>
     public partial class ucInfo : UserControl
     {
+        private List<PersonStadtVM>? m_lstPerson;
+
         public ucInfo()
         {
             InitializeComponent();
+            m_lstPerson = new();
         }
 
         public async Task GetPersonsAsync()
@@ -38,14 +41,28 @@ namespace Kursprojekt.UserControls
                 if (PersonListe != null)
                 {
                     lstPerson.ItemsSource = AppHelper.GetListPersonStadtVM_from_ListPersonStad(PersonListe);
+                    m_lstPerson = AppHelper.GetListPersonStadtVM_from_ListPersonStad(PersonListe);
                 }
                 ShowCompoOnPlaceholder(new StartCompo());
             }
         }
 
-        public async Task PersonSuchenAsync()
+        public void PersonSuchen(string sSearchText)
         {
+            using (new WaitProgressRing(pgRing))
+            {
+                if (m_lstPerson == null) return;
 
+                if (sSearchText != string.Empty)
+                {
+                    var lstPersonSearch = m_lstPerson.Where(w => w.Name.Contains(sSearchText) || w.Vorname.Contains(sSearchText)).ToList();
+                    lstPerson.ItemsSource = lstPersonSearch;
+                }
+                else
+                {
+                    lstPerson.ItemsSource = m_lstPerson;
+                }
+            }
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)

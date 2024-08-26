@@ -206,7 +206,7 @@ namespace Kursprojekt
 
         private void txtSearchPerson_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            _ucInfo!.PersonSuchen(txtSearchPerson.Text.Trim());
         }
 
         private async void btnRefresh_Click(object sender, RoutedEventArgs e)
