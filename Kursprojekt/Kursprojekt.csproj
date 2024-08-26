@@ -10,7 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\medizin.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="AppIcon.ico" />
+    <Content Include="Images\medizin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -27,10 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WikkiDBLib\WikkiDBLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\" />
   </ItemGroup>
 
   <ItemGroup>

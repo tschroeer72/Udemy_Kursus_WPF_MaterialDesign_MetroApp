@@ -9,13 +9,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <BitmapImage x:Key="imgStart" UriSource="/Images/Start.png"/>
+        <BitmapImage x:Key="imgStart" UriSource="\Images\medizin.png"/>
     </UserControl.Resources>
     <Grid Background="{StaticResource AppBrushColorBlue}">
         <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn,Duration=0:0:0.2}">
             <Border Margin="150 20 150 0"
                 CornerRadius="0 300 0 300">
                 <Border.Background>
+                    <!--<ImageBrush ImageSource="/Images/medizin.png"/>-->
                     <ImageBrush ImageSource="{StaticResource imgStart}"/>
                 </Border.Background>
             </Border>

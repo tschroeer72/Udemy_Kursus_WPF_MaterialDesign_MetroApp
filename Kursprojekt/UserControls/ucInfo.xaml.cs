@@ -1,4 +1,5 @@
 ﻿using Kursprojekt.Helpers;
+using Kursprojekt.UCComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WikkiDBLib.DBAccess;
 using WikkiDBLib.Modells;
+using WikkiDBLib.Models.ViewModels;
 
 namespace Kursprojekt.UserControls
 {
@@ -37,6 +39,7 @@ namespace Kursprojekt.UserControls
                 {
                     lstPerson.ItemsSource = AppHelper.GetListPersonStadtVM_from_ListPersonStad(PersonListe);
                 }
+                ShowCompoOnPlaceholder(new StartCompo());
             }
         }
 
@@ -73,6 +76,23 @@ namespace Kursprojekt.UserControls
                 lstPerson.SelectedIndex = lstPerson.Items.Count - 1;
             }
             lstPerson.ScrollIntoView(lstPerson.SelectedItem);
+        }
+
+        private void ShowCompoOnPlaceholder(UserControl userControl)
+        {
+            grdPlaceholder.Children.Clear();
+            grdPlaceholder.Children.Add(userControl);
+        }
+
+        private void lstPerson_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(lstPerson.SelectedItem != null)
+            {
+                if(lstPerson.SelectedItem is PersonStadtVM oPersonStadtVM)
+                {
+                    ShowCompoOnPlaceholder(new PersonCompo(oPersonStadtVM));
+                }
+            }
         }
     }
 }

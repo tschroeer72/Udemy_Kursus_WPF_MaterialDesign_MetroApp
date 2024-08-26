@@ -228,7 +228,7 @@
                             <ListBox x:Name="lstPerson"
                                      ItemContainerStyle="{StaticResource ListBoxItemPersonStyle}"
                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="lstPerson_SelectionChanged">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal">
