@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Kursprojekt.UCComponents.PersonCompo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Kursprojekt.UCComponents"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:vm="clr-namespace:WikkiDBLib.Models.ViewModels;assembly=WikkiDBLib"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:PersonStadtVM}"
+             d:DesignHeight="400" d:DesignWidth="1100">
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource AppBrushColorBlue}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="{StaticResource AppBrushColorBlue}">
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="1000">
+            <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=SlideInFromLeft,Duration=0:0:0.3}">
+                <Grid Margin="10 30 0 0">
+                    <!-- Person Image -->
+                    <Grid HorizontalAlignment="Left" Width="400">
+                        <Border BorderThickness="0 0 0 8" BorderBrush="{StaticResource AppBrushColorCyan}">
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <ImageBrush x:Name="imgSelPerson" Stretch="Fill"
+                                                ImageSource="{Binding BitmapImage}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                    </Grid>
+                    
+                    <!-- Person Data -->
+                    <Grid HorizontalAlignment="Right" Width="500" Margin="0 10 0 0">
+                        <StackPanel x:Name="StPnlUnten" Orientation="Vertical"
+                                    Background="{StaticResource AppBrushColorBlue}">
+                            <Border Height="50" Margin="0 10" Background="White"
+                                    BorderThickness="0 0 0 8"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <Label Content="{Binding Name}"/>
+                            </Border>
+                            <Border Height="50" Margin="0 10" Background="White"
+                                    BorderThickness="0 0 0 8"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <Label Content="{Binding Vorname}"/>
+                            </Border>
+                            <Border Height="50" Margin="0 10" Background="White"
+                                    BorderThickness="0 0 0 8"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <Label Content="{Binding Stadt}"/>
+                            </Border>
+                            <Border Height="70" Background="White" 
+                                    BorderThickness="0 0 0 8"
+                                    BorderBrush="{StaticResource AppBrushColorCyan}">
+                                <Label x:Name="lblStatus" FontFamily="Antique Olive" FontSize="50"></Label>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </md:TransitioningContent>
+        </Grid>
+    </Grid>
+</UserControl>
