@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              SnapsToDevicePixels="True"
              UseLayoutRounding="True"
-             d:DesignHeight="650" d:DesignWidth="1200">
+             d:DesignHeight="650" d:DesignWidth="1200" Loaded="UserControl_Loaded">
     <Grid Background="{StaticResource AppBrushColorBlue}">
         <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=ExpandIn,Duration=0:0:0.4}">
             <Grid>
