@@ -56,8 +56,8 @@
         <Style x:Key="ListBoxItemPersonStyle" TargetType="ListBoxItem">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="UseLayoutRounding" Value="True"/>
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="200"/>
+            <Setter Property="Width" Value="190"/>
+            <Setter Property="Height" Value="190"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -71,7 +71,7 @@
                                     UseLayoutRounding="True"
                                     SnapsToDevicePixels="True">
                                 <StackPanel Orientation="Vertical">
-                                    <Ellipse Width="140" Height="140" Margin="4">
+                                    <Ellipse x:Name="imgEllipse" Width="140" Height="140" Margin="4">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="{Binding BitmapImage}" Stretch="UniformToFill" />
                                         </Ellipse.Fill>
@@ -90,22 +90,109 @@
                                            Padding="0 4 0 0"
                                            HorizontalContentAlignment="Center">                                        
                                     </Label>
-                                    <Border Background="Transparent"
+                                    <Border x:Name="borderCursorBottom" Background="{StaticResource AppBrushColorCyan}"
                                             Height="24"
                                             CornerRadius="0 0 40 40"
-                                            Margin="10 0">
-                                        <Border Background="Transparent"
+                                            Margin="14 4 14 0"
+                                            Visibility="Collapsed">
+                                        <Border.Clip>
+                                            <RectangleGeometry Rect="0 0 170 24"/>
+                                        </Border.Clip>
+                                        <Border x:Name="borderCursorIcon" Background="Transparent"
                                                 Width="24" Height="24">
+                                            <Border.RenderTransform>
+                                                <TranslateTransform x:Name="borderCursorIconTransform"/>
+                                            </Border.RenderTransform>
                                             <md:PackIcon Kind="ArrowDownBoldBox" 
                                                      Foreground="{StaticResource AppBrushColorBlue}"
                                                          VerticalAlignment="Center"
                                                      Width="24" Height="24">
                                             </md:PackIcon>
+                                            <Border.Triggers>
+                                                <EventTrigger RoutedEvent="Loaded">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="borderCursorIconTransform"
+                                                                                           Storyboard.TargetProperty="Y"
+                                                                                           RepeatBehavior="Forever">
+                                                                <EasingDoubleKeyFrame KeyTime="0" Value="-30" />
+                                                                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="30"/>
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Border.Triggers>
                                         </Border>
                                     </Border>
                                 </StackPanel>
                             </Border>
                         </md:Card>
+                        <ControlTemplate.Triggers>
+                            <!-- IsSelected -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="borderCursorBottom" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="TemplateBorder" Property="BorderThickness" Value="0 0 0 4"/>
+                            </Trigger>
+
+                            <Trigger Property="IsSelected" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             To="214"
+                                                             Duration="0:0:0:0.2">                                                
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                             To="190"
+                                                             Duration="0:0:0:0.2">   
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                            <!-- IsMouseOver -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="imgEllipse"
+                                                             Storyboard.TargetProperty="Height"
+                                                             To="160"
+                                                             Duration="0:0:0:0.2">
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="imgEllipse"
+                                                             Storyboard.TargetProperty="Width"
+                                                             To="160"
+                                                             Duration="0:0:0:0.2">
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="imgEllipse"
+                                                             Storyboard.TargetProperty="Height"
+                                                             To="140"
+                                                             Duration="0:0:0:0.2">
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="imgEllipse"
+                                                             Storyboard.TargetProperty="Width"
+                                                             To="140"
+                                                             Duration="0:0:0:0.2">
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
