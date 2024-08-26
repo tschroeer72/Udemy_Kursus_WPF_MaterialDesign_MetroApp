@@ -218,7 +218,7 @@
                         <Grid Style="{StaticResource RpBtnGridStyle}"
                               HorizontalAlignment="Left"
                               Panel.ZIndex="1">
-                            <RepeatButton x:Name="rpBtnGoBack" Style="{StaticResource BtnListBoxStyle}">
+                            <RepeatButton x:Name="rpBtnGoBack" Style="{StaticResource BtnListBoxStyle}" Click="rpBtnGoBack_Click">
                                 <md:PackIcon Kind="ChevronLeft" Height="100" Width="100"></md:PackIcon>
                             </RepeatButton>
                         </Grid>
@@ -249,7 +249,7 @@
                         <Grid Style="{StaticResource RpBtnGridStyle}"
                               HorizontalAlignment="Right"
                               Panel.ZIndex="1">
-                            <RepeatButton x:Name="rpBtnGoForward" Style="{StaticResource BtnListBoxStyle}">
+                            <RepeatButton x:Name="rpBtnGoForward" Style="{StaticResource BtnListBoxStyle}" Click="rpBtnGoForward_Click">
                                 <md:PackIcon Kind="ChevronRight" Height="100" Width="100"></md:PackIcon>
                             </RepeatButton>
                         </Grid>

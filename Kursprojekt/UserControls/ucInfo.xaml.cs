@@ -44,5 +44,35 @@ namespace Kursprojekt.UserControls
         {
             await GetPersons();
         }
+
+        private void rpBtnGoForward_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstPerson.Items.Count <= 0) return;
+
+            if(lstPerson.SelectedIndex< lstPerson.Items.Count - 1)
+            {
+                lstPerson.SelectedIndex++;
+            }
+            else
+            {
+                lstPerson.SelectedIndex = 0;
+            }
+            lstPerson.ScrollIntoView(lstPerson.SelectedItem);
+        }
+
+        private void rpBtnGoBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstPerson.Items.Count <= 0) return;
+
+            if (lstPerson.SelectedIndex > 0)
+            {
+                lstPerson.SelectedIndex--;
+            }
+            else
+            {
+                lstPerson.SelectedIndex = lstPerson.Items.Count - 1;
+            }
+            lstPerson.ScrollIntoView(lstPerson.SelectedItem);
+        }
     }
 }
