@@ -518,6 +518,9 @@
             <Style TargetType="TextBox"  >
                 <!-- BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" -->
                 <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
+                <Setter Property="md:HintAssist.HelperTextFontSize" Value="16"/>
+                <Setter Property="md:HintAssist.Foreground" Value="White"/>
                 <Setter Property="md:TextFieldAssist.UnderlineBrush" Value="{StaticResource AppBrushColorCyan}"/>
                 <Setter Property="BorderBrush" Value="{StaticResource AppBrushColorCyan}"/>
                 <Setter Property="FontFamily" Value="Arial Black"/>

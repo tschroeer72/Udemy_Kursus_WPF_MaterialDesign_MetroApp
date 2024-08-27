@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WikkiDBLib.DBAccess;
+using WikkiDBLib.Modells;
 
 namespace Kursprojekt.UserControls
 {
@@ -23,6 +24,8 @@ namespace Kursprojekt.UserControls
     /// </summary>
     public partial class ucStatistik : UserControl
     {
+        private List<Stadt>? m_lstCities = new();
+
         public ucStatistik()
         {
             InitializeComponent();
@@ -37,7 +40,8 @@ namespace Kursprojekt.UserControls
         {
             using(new WaitProgressRing(pgRing))
             {
-                lstCities.ItemsSource = await Task.Run(() => DBUnit.Stadt.GetAll());
+                m_lstCities = await Task.Run(() => DBUnit.Stadt.GetAll()?.ToList());
+                lstCities.ItemsSource = m_lstCities;
             }
         }
 
@@ -48,7 +52,15 @@ namespace Kursprojekt.UserControls
 
         private void txtSearchCity_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            var txtSearchString = txtSearchCity.Text.Trim();
+            if (!string.IsNullOrEmpty(txtSearchString))
+            {
+                lstCities.ItemsSource = m_lstCities?.Where(w => w.Name.Contains(txtSearchString,StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+            else
+            {
+                lstCities.ItemsSource = m_lstCities;
+            }                
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
