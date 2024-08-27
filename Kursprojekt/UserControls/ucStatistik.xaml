@@ -107,7 +107,8 @@
                             CornerRadius="50"
                             Margin="8 2">
                         <Grid VerticalAlignment="Top"
-                              HorizontalAlignment="Left">
+                              >
+                            <!-- HorizontalAlignment="Left"-->
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="300"/>
                                 <RowDefinition Height="200"/>
@@ -118,7 +119,7 @@
                                 <lc:CartesianChart Name="BarChart"
                                                    LegendLocation="Top"
                                                    Cursor="Hand"
-                                                   Series="{Binding }">
+                                                   Series="{Binding}">
                                     <lc:CartesianChart.ChartLegend>
                                         <lc:DefaultLegend BulletSize="40"
                                                           FontSize="20"
@@ -158,13 +159,12 @@
                                     <lc:PieChart.ChartLegend>
                                         <lc:DefaultLegend Visibility="Collapsed"/>
                                     </lc:PieChart.ChartLegend>
-                                    
-                                    <lc:DefaultTooltip>
+
+                                    <lc:PieChart.DataTooltip>
                                         <lc:DefaultTooltip BulletSize="50"
-                                                           FontSize="30"
-                                                           SelectionMode="OnlySender">
+                                                           FontSize="30">
                                         </lc:DefaultTooltip>                                        
-                                    </lc:DefaultTooltip>
+                                    </lc:PieChart.DataTooltip>
                                 </lc:PieChart>
                             </Grid>
 
