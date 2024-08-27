@@ -130,7 +130,8 @@
                                     
                                     <lc:CartesianChart.DataTooltip>
                                         <lc:DefaultTooltip BulletSize="50"
-                                                           FontSize="30">                                            
+                                                           FontSize="30"
+                                                           SelectionMode="OnlySender">                                            
                                         </lc:DefaultTooltip>
                                     </lc:CartesianChart.DataTooltip>
 

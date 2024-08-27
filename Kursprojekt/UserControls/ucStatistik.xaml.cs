@@ -1,4 +1,6 @@
-﻿using Kursprojekt.Helpers;
+﻿using Kursprojekt.AppWindows;
+using Kursprojekt.DTOs;
+using Kursprojekt.Helpers;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows;
@@ -38,7 +40,7 @@ namespace Kursprojekt.UserControls
 
         private void PieChart_DataClick(object sender, ChartPoint chartPoint)
         {
-
+            new InfoDialog($"{chartPoint.SeriesView.Title} ({chartPoint.Participation * 100} %)", IWDialogType.Information).ShowDialog();
         }
 
         private void txtSearchCity_TextChanged(object sender, TextChangedEventArgs e)
@@ -60,7 +62,7 @@ namespace Kursprojekt.UserControls
             {
                 new ColumnSeries()
                 {
-                    Title = $"Total {iTotal}",
+                    Title = $"Total: {iTotal}",
                     Values = new ChartValues<int>{iTotal },
                     Fill = (Brush)Application.Current.Resources["AppBrushColorBlue"],
                     DataLabels = true,
@@ -71,7 +73,7 @@ namespace Kursprojekt.UserControls
                 },
                 new ColumnSeries()
                 {
-                    Title = $"Infiziert {iTotalInfiziert}",
+                    Title = $"Infiziert: {iTotalInfiziert}",
                     Values = new ChartValues<int>{iTotalInfiziert },
                     Fill = Brushes.DarkRed,
                     DataLabels = true,
@@ -82,7 +84,7 @@ namespace Kursprojekt.UserControls
                 },
                 new ColumnSeries()
                 {
-                    Title = $"Nicht infiziert {iTotalNichtInfiziert}",
+                    Title = $"Nicht infiziert: {iTotalNichtInfiziert}",
                     Values = new ChartValues<int>{iTotalNichtInfiziert },
                     Fill = (Brush)Application.Current.Resources["AppBrushColorCyan"],
                     DataLabels = true,
@@ -103,21 +105,21 @@ namespace Kursprojekt.UserControls
             {
                 new PieSeries()
                 {
-                    Title = $"Infiziert {iTotalInfiziert}",
+                    Title = $"Infiziert: {iTotalInfiziert}",
                     Values = new ChartValues<int>{iTotalInfiziert },
                     Fill = Brushes.DarkRed,
                     DataLabels = true,
                     FontSize = 80,
-                    Foreground = Brushes.DarkRed,
+                    Foreground = Brushes.White,
                 },
                 new PieSeries()
                 {
-                    Title = $"Nicht infiziert {iTotalNichtInfiziert}",
+                    Title = $"Nicht infiziert: {iTotalNichtInfiziert}",
                     Values = new ChartValues<int>{iTotalNichtInfiziert },
                     Fill = (Brush)Application.Current.Resources["AppBrushColorCyan"],
                     DataLabels = true,
                     FontSize = 80,
-                    Foreground = (Brush)Application.Current.Resources["AppBrushColorCyan"]
+                    Foreground = Brushes.White
                 }
             };
 
@@ -136,9 +138,21 @@ namespace Kursprojekt.UserControls
             await InitialLoadAsync();
         }
 
-        private void lstCities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void lstCities_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ShowData(1, 1, 1);
+            using (new WaitProgressRing(pgRingCharts)) 
+            {
+                var selCity = lstCities.SelectedItem as Stadt;
+                var lstPers = await Task.Run(() => DBUnit.Person.GetAll(filter:p => p.StadtID == selCity.ID));
+                if (lstPers != null && lstPers.Count() > 0) 
+                {
+                    int intTotal = lstPers.Count();
+                    int intInfiziert = lstPers.Where(w => w.Infiziert == true).Count();
+                    int intNichtInfiziert = lstPers.Where(w => w.Infiziert == false).Count();
+
+                    ShowData(intTotal, intInfiziert, intNichtInfiziert);
+                }                
+            }
         }
     }
 }
