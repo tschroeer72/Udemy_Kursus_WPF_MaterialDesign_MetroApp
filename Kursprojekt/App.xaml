@@ -350,7 +350,7 @@
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Style x:Key="ComboBoxStyle" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
                 <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemStyle}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
@@ -515,8 +515,7 @@
             </Style>
             
             <!-- Textbox -->
-            <Style TargetType="TextBox"  >
-                <!-- BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" -->
+            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" >
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Background" Value="{StaticResource AppBrushColorBlue}"/>
                 <Setter Property="md:HintAssist.HelperTextFontSize" Value="16"/>
